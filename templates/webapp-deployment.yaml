@@ -1,0 +1,151 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "helm-webapp.fullname" . }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: {{ .Values.replicaCount}}
+  minReadySeconds: 10
+  revisionHistoryLimit: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 50%
+  selector:
+    matchLabels:
+  {{- include "helm-webapp.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+    {{- include "helm-webapp.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      restartPolicy: Always
+      containers:
+        {{- range .Values.containers }}
+        - name: {{ . }}
+          image: {{ .repository }}:{{ .tag }}
+          {{ if .args }}
+          args: [{{ .args | quote}}]
+          {{end}}
+          {{ if .port }}
+          ports:
+            - containerPort: {{ .port }}
+          readinessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            tcpSocket:
+              port: {{ .port }}
+          livenessProbe:
+            initialDelaySeconds: 10
+            periodSeconds: 15
+            tcpSocket:
+              port: {{ .port }}
+            timeoutSeconds: 30
+          {{ end }}
+          resources: { }
+          env:
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: APP_KEY
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_DATABASE
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_PASSWORD
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_USER
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MAIL_PASSWORD
+            - name: MAILGUN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MAILGUN_SECRET
+            - name: STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_KEY
+            - name: STRIPE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_SECRET
+            - name: MIX_STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MIX_STRIPE_KEY
+            - name: MIX_STRIPE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MIX_STRIPE_SECRET
+            - name: STRIPE_USER_PLAN
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_USER_PLAN
+            - name: STRIPE_TAX_RATE
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_TAX_RATE
+            - name: EEX_SFTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_USERNAME
+            - name: EEX_SFTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_PASSWORD
+            - name: EEX_SFTP_REMOTE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_REMOTE_PATH
+            - name: LOG_SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: LOG_SLACK_WEBHOOK_URL
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: SLACK_WEBHOOK_URL
+          envFrom:
+            - configMapRef:
+                name: kuhdo-portal-config
+          {{- end }}
+          #lifecycle:
+          #  postStart:
+          #    exec:
+          #      command:
+          #        - /bin/sh
+          #        - -c
+          #        - wget -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/

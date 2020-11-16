@@ -1,0 +1,12 @@
+dependencies:
+- name: mariadb-galera
+  repository: https://charts.bitnami.com/bitnami
+  version: 5.0.1
+- name: redis
+  repository: https://charts.bitnami.com/bitnami
+  version: 3.2.1
+- name: minio
+  repository: https://helm.min.io/
+  version: 8.0.2
+digest: sha256:1b0f3f0f88727329a76c2c7afd0217a7158789a3a29ba5155a2e0c1c7868c336
+generated: "2020-11-16T19:54:17.54659+01:00"

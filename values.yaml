@@ -1,0 +1,191 @@
+# Default values for kuhdo-app.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+namespace: kuhdo-portal-test
+replicaCount: 1
+nameOverride: ""
+fullnameOverride: "KUHdo Web-App instance"
+
+containers:
+  - web:
+    repository: kuhdo/web
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v1.5.2"
+    port: 80
+  - app:
+    repository: kuhdo/app
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v1.5.2"
+    port: 9000
+    args: "prod"
+  - queue:
+    repository: kuhdo/app
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v1.5.2"
+    args: "queue"
+  - scheduler:
+    repository: kuhdo/app
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v1.5.2"
+    args: "scheduler"
+  - websockets:
+    repository: kuhdo/app
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: "v1.5.2"
+    args: "websockets"
+
+# Configmap
+dotenv:
+  APP_DEBUG: "false"
+  APP_ENV: production
+  APP_LOG_LEVEL: debug
+  APP_LOG_CHANNEL: errorlog
+  APP_NAME: "KUHdo GmbH"
+  APP_URL: https://portal.kuhdo.de
+  BROADCAST_DRIVER: redis
+  CACHE_DRIVER: redis
+  QUEUE_DRIVER: redis
+  SESSION_DRIVER: redis
+  SESSION_DOMAIN: .portal.kuhdo.de
+  SESSION_CONNECTION: redis
+  DB_CONNECTION: mariadb
+  DB_DATABASE: homestead
+  DB_HOST: database-svc
+  DB_PASSWORD: secret
+  DB_PORT: "3306"
+  DB_USERNAME: username
+  REDIS_HOST: redis-svc
+  REDIS_PORT: "6379"
+  REDIS_CLIENT: phpredis
+  MAIL_MAILER: mailgun
+  MAIL_HOST: api.eu.mailgun.org
+  MAIL_NAME: KUHdo
+  MAIL_PORT: "587"
+  MAIL_USERNAME: portal@email.kuhdo.de
+  MAIL_FROM_ADDRESS: no-reply@kuhdo.de
+  MAIL_ENCRYPTION: tls
+  MAILGUN_DOMAIN: email.kuhdo.de
+  MAILGUN_ENDPOINT: api.eu.mailgun.net
+  TELESCOPE_REQUEST_WATCHER: "false"
+  TELESCOPE_ENABLED: "false"
+  EEX_SFTP_HOST: sftp.datasource.eex-group.com
+  MIX_VUE_APP_I18N_LOCALE: de
+  MIX_VUE_APP_I18N_FALLBACK_LOCALE: en
+
+imagePullSecrets:
+  - name: regcred
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  annotations:
+     kubernetes.io/ingress.class: traefik
+     kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: dev.kuhdo.local
+      paths: [/]
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 3
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+redis:
+  service:
+    annotations: { }
+  serviceType: Nodeport
+  securityContext:
+    enabled: false
+  ## Cluster settings
+  cluster:
+    enabled: true
+    slaveCount: 3
+  metrics:
+    enabled: true
+    # resources: {}
+    # podAnnotations: {}
+    # targetServiceAnnotations:
+    #   prometheus.io/scrape: "true"
+    #   prometheus.io/port: "9121"
+
+  ##
+  ## Redis Master parameters
+  ##
+  master:
+    ## Use password authentication
+    port: 6379
+    ## Redis Master pod annotations
+    podAnnotations: { }
+    ## Redis Master Service properties
+    service:
+      ##  Redis Master Service type
+      type: NodePort
+      annotations: { }
+
+  ##
+  ## Redis Slave properties
+  ## Note: serviceType and service are mandatory parameters
+  ## The rest of the parameters, if undefined, will inherit those declared in Redis Master
+  ##
+  slave:
+    ## Slave Service properties
+    service:
+      ## Redis Slave Service type
+      type: NodePort
+      annotations: { }
+      loadBalancerIP:
