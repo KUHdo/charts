@@ -1,6 +1,7 @@
 apiVersion: v2
 name: kuhdo-webapp
 description: A Helm chart for KUHdo web application
+kubeVersion: ^1.19.2
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives

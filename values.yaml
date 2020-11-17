@@ -5,7 +5,7 @@
 namespace: kuhdo-portal-test
 replicaCount: 1
 nameOverride: ""
-fullnameOverride: "KUHdo Web-App instance"
+fullnameOverride: "KUHdo Web-App"
 
 containers:
   - web:
@@ -78,6 +78,11 @@ dotenv:
   MIX_VUE_APP_I18N_LOCALE: de
   MIX_VUE_APP_I18N_FALLBACK_LOCALE: en
 
+imageCredentials:
+  username: user
+  password: accesskey
+  email: e-mail@domain.tld
+
 imagePullSecrets:
   - name: regcred
 
@@ -91,7 +96,6 @@ serviceAccount:
   name: ""
 
 podAnnotations: {}
-
 podSecurityContext: {}
   # fsGroup: 2000
 
