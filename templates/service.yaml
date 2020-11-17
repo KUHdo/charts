@@ -2,16 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: {{ .Values.global.namespace }}
-  name: {{ include "helm-webapp.fullname" . | lower | nospace }}-web
+  name: {{ include "helm-webapp.fullname" . | kebabcase }}-web
   labels:
     {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
-      targetPort: http
       protocol: TCP
-      name: http
+      name: {{ include "helm-webapp.fullname" .  | kebabcase }}-web
   selector:
     {{- include "helm-webapp.selectorLabels" . | nindent 4 }}
 ---
@@ -23,11 +21,10 @@ metadata:
   labels:
   {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
   ports:
     - port: 9000
       protocol: TCP
-      name: php
+      name: {{ include "helm-webapp.fullname" .  | kebabcase }}-app
   selector:
   {{- include "helm-webapp.selectorLabels" . | nindent 4 }}
 ---
@@ -39,10 +36,9 @@ metadata:
   labels:
   {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
-  type: NodePort
   ports:
     - port: 6001
       protocol: TCP
-      name: websockets
+      name: {{ include "helm-webapp.fullname" . | kebabcase }}-websockets
   selector:
   {{- include "helm-webapp.selectorLabels" . | nindent 4 }}

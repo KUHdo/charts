@@ -8,7 +8,7 @@ image:
   repository: mariadb
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "10.5.8"
 
 secrets:
   MYSQL_DATABASE: homestead
@@ -18,7 +18,7 @@ secrets:
 
 imagePullSecrets: []
 nameOverride: "database"
-fullnameOverride: "mariadb"
+fullnameOverride: "database"
 
 serviceAccount:
   # Specifies whether a service account should be created

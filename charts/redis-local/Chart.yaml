@@ -1,5 +1,5 @@
 apiVersion: v2
-name: redis
+name: redis-local
 description: A Helm chart for KUHdo Web-App
 
 # A chart can be either an 'application' or a 'library' chart.

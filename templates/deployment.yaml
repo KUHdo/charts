@@ -28,10 +28,218 @@ spec:
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always
+      initContainers:
+        - image: "{{ .Values.containers.app.repository}}:{{ .Values.containers.app.tag | default .Chart.AppVersion }}"
+          name: artisan
+          imagePullPolicy: Always
+          command:
+            - /bin/sh
+            - -c
+            - php artisan migrate --force;
+            - php artisan route:cache ;
+            - php artisan view:clear ;
+            - php artisan db:seed --force --class RolesPermissions ;
+            - php artisan kuhdo:courses:current ;
+            - php artisan horizon:terminate ;
+          env:
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: APP_KEY
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_DATABASE
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_PASSWORD
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_USER
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MAIL_PASSWORD
+            - name: MAILGUN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MAILGUN_SECRET
+            - name: STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_KEY
+            - name: STRIPE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_SECRET
+            - name: MIX_STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MIX_STRIPE_KEY
+            - name: MIX_STRIPE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MIX_STRIPE_SECRET
+            - name: STRIPE_USER_PLAN
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_USER_PLAN
+            - name: STRIPE_TAX_RATE
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_TAX_RATE
+            - name: EEX_SFTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_USERNAME
+            - name: EEX_SFTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_PASSWORD
+            - name: EEX_SFTP_REMOTE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_REMOTE_PATH
+            - name: LOG_SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: LOG_SLACK_WEBHOOK_URL
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: SLACK_WEBHOOK_URL
+          envFrom:
+            - configMapRef:
+                name: kuhdo-portal-config
+          {{ if .Values.tags.dynamic }}
+        - image: "{{ .Values.containers.app.repository}}:{{ .Values.containers.app.tag | default .Chart.AppVersion }}"
+          name: artisan-dynmaic
+          imagePullPolicy: Always
+          command:
+            - /bin/bash
+            - -c
+            - php artisan db:seed --env=local ;
+          env:
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: APP_KEY
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_DATABASE
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_PASSWORD
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: database-user-creds
+                  key: MYSQL_USER
+            - name: MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MAIL_PASSWORD
+            - name: MAILGUN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MAILGUN_SECRET
+            - name: STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_KEY
+            - name: STRIPE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_SECRET
+            - name: MIX_STRIPE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MIX_STRIPE_KEY
+            - name: MIX_STRIPE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: MIX_STRIPE_SECRET
+            - name: STRIPE_USER_PLAN
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_USER_PLAN
+            - name: STRIPE_TAX_RATE
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: STRIPE_TAX_RATE
+            - name: EEX_SFTP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_USERNAME
+            - name: EEX_SFTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_PASSWORD
+            - name: EEX_SFTP_REMOTE_PATH
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: EEX_SFTP_REMOTE_PATH
+            - name: LOG_SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: LOG_SLACK_WEBHOOK_URL
+            - name: SLACK_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: webapp-env-secrets
+                  key: SLACK_WEBHOOK_URL
+          envFrom:
+            - configMapRef:
+                name: kuhdo-portal-config
+          {{end}}
+        - image: "{{ .Values.containers.web.repository}}:{{ .Values.containers.web.tag | default .Chart.AppVersion }}"
+          name: caddy-config
+          imagePullPolicy: Always
+          args:
+            - /bin/sh
+              - -c
+              - wget -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/
       containers:
         {{- range $key, $config := .Values.containers }}
         - name: {{ $key }}
-          image: {{ $config.repository }}:{{ $config.tag }}
+          image: "{{ $config.repository }}:{{ $config.tag }}"
+          imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]
           {{end}}

@@ -7,7 +7,7 @@ namespace: |-
   {{ .Values.global.namespace }}
 replicaCount: 1
 nameOverride: "kuhdo-webapp"
-fullnameOverride: "kuhdo-web-app"
+fullnameOverride: "kuhdo-webapp"
 
 # Environments descriptions
 tags:
@@ -25,7 +25,7 @@ containers:
     port: 80
   app:
     repository: kuhdo/app
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "1.4.2"
     port: 9000
@@ -64,12 +64,9 @@ dotenv:
   SESSION_DOMAIN: ".portal.kuhdo.de"
   SESSION_CONNECTION: "redis"
   DB_CONNECTION: "mariadb"
-  DB_DATABASE: "homestead"
-  DB_HOST: "database-svc"
-  DB_PASSWORD: "secret"
+  DB_HOST: "database"
   DB_PORT: "3306"
-  DB_USERNAME: "username"
-  REDIS_HOST: "redis-svc"
+  REDIS_HOST: "redis"
   REDIS_PORT: "6379"
   REDIS_CLIENT: "phpredis"
   MAIL_MAILER: "mailgun"
@@ -89,9 +86,9 @@ dotenv:
 
 imageCredentials:
   registry: docker.io
-  username: user
-  password: access-token
-  email: e-mail@tld.de
+  username: arneba
+  password: 7a3d0665-0f1a-47a6-9167-b877b9ea7def
+  email: Arne.Bartelt@kuhdo.de
 
 imagePullSecrets:
   - name: regcred
@@ -159,7 +156,11 @@ tolerations: []
 
 affinity: {}
 
+# Dependency values
+database:
+  enabled: true
 redis:
+  enabled: true
   service:
     annotations: { }
   serviceType: Nodeport

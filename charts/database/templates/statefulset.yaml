@@ -9,6 +9,7 @@ spec:
   selector:
     matchLabels:
   {{- include "database.selectorLabels" . | nindent 6 }}
+  serviceName: {{ include "database.fullname" . }}-svc
   template:
     metadata:
       namespace: {{ .Values.global.namespace }}
@@ -50,7 +51,7 @@ spec:
                   name: {{ include "database.fullname" . }}-user-creds
                   key: MYSQL_PASSWORD
           volumeMounts:
-            - name: mariadb-persistent-storage
+            - name: {{ include "database.fullname" . }}-storage
               mountPath: /var/lib/mysql
       volumes:
         - name: {{ include "database.fullname" . }}-storage
