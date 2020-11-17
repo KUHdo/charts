@@ -1,4 +1,10 @@
-1. Get the application URL by running these commands:
+1. KUHdo Web-Application was deploy with environment:
+{{- range $name, $env := .Values.tags }}
+{{- if $env }}
+{{ printf "%s: %t" $name $env | indent 3}}
+{{- end }}
+{{- end }}
+2. Application will be available under the following URL:
 {{- if .Values.ingress.enabled }}
 {{- range $host := .Values.ingress.hosts }}
   {{- range .paths }}

@@ -259,7 +259,7 @@ spec:
                 command:
                   - /bin/sh
                   - -c
-                  - wget -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/
+                  - wget -t 5 -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/
           {{ end }}
           resources: { }
           {{ if ne $key "web" }}

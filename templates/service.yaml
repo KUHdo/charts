@@ -6,6 +6,7 @@ metadata:
   labels:
     {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
+  type: {{  .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
       protocol: TCP
@@ -36,6 +37,7 @@ metadata:
   labels:
   {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
+  type: {{  .Values.service.type }}
   ports:
     - port: 6001
       protocol: TCP
