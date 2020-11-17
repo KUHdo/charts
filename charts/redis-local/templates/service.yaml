@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: {{ .Values.global.namespace }}
-  name: {{ include "redis.fullname" . }}
+  name: {{ include "redis.fullname" . }}-svc
   labels:
   {{- include "redis.labels" . | nindent 4 }}
 spec:
