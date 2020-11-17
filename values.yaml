@@ -1,55 +1,63 @@
 # Default values for kuhdo-app.
 # This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-global:
-  namespace: kuhdo-portal-test-2
-namespace: |-
-  {{ .Values.global.namespace }}
-replicaCount: 1
-nameOverride: "kuhdo-webapp"
-fullnameOverride: "kuhdo-webapp"
 
 # Environments descriptions
+# enable only one of those
 tags:
   production: false
   staging: false
-  dynamic: true
+  dynamic: false
   local: true
 
+# Application namespace
+# global namespace links to namespace: but is
+# also available for sub charts
+global:
+  namespace: kuhdo-portal-test-2
+# this is for the parent chart
+namespace: |-
+  {{ .Values.global.namespace }}
+# deployment replicaCount of pod
+replicaCount: 1
+# meta data for selectors
+nameOverride: "kuhdo-webapp"
+fullnameOverride: "kuhdo-webapp"
+
+# pod container configuration
 containers:
+  # name of the container
   web:
+    # image and version of the container
     repository: kuhdo/web
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
+    # live- and readiness probe is only set  if
+    # the container has a port list entry
     port: 80
   app:
     repository: kuhdo/app
     pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
     tag: "1.4.2"
     port: 9000
     args: "prod"
   queue:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
     tag: "1.4.2"
     args: "queue"
   scheduler:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
     tag: "1.4.2"
     args: "scheduler"
   websockets:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
     tag: "1.4.2"
     args: "websockets"
 
-# Configmap
+# Configmap for laravel app container
 dotenv:
   APP_DEBUG: "false"
   APP_ENV: "production"
@@ -84,12 +92,30 @@ dotenv:
   MIX_VUE_APP_I18N_LOCALE: "de"
   MIX_VUE_APP_I18N_FALLBACK_LOCALE: "en"
 
+# Secrets for the laravel app container
+secrets:
+  APP_KEY: base64:sh8FW+fW3s62e8gg1LVwojlNP0wruH54/WAhsFnye3U=
+  EEX_SFTP_PASSWORD: supersecret
+  EEX_SFTP_REMOTE_PATH: /F:/EEX_Production/master/market_data/agricultural
+  EEX_SFTP_USERNAME: EEX_6..
+  LOG_SLACK_WEBHOOK_URL: supersecret
+  MAILGUN_SECRET: key-a05395e...
+  MAIL_PASSWORD: test123
+  MIX_STRIPE_KEY: supersecret
+  MIX_STRIPE_SECRET: supersecret
+  SLACK_WEBHOOK_URL: supersecret
+  STRIPE_KEY: supersecret
+  STRIPE_SECRET: supersecret
+  STRIPE_TAX_RATE: txr_1EPpn...
+  STRIPE_USER_PLAN: plan_DNd...1
+
+# docker registry credentials to be created regcred
 imageCredentials:
   registry: docker.io
   username: arneba
   password: 7a3d0665-0f1a-47a6-9167-b877b9ea7def
   email: Arne.Bartelt@kuhdo.de
-
+#  Map of pull secrets if there are different for the images
 imagePullSecrets:
   - name: regcred
 
@@ -121,11 +147,13 @@ service:
 ingress:
   enabled: true
   annotations:
-     kubernetes.io/ingress.class: traefik
+     #kubernetes.io/ingress.class: traefik
      kubernetes.io/tls-acme: "true"
   hosts:
     - host: dev.kuhdo.local
       paths: [/]
+      port: 80
+      name: web
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
