@@ -137,7 +137,8 @@ spec:
           command:
             - /bin/sh
             - -c
-            - php artisan db:seed --env=local ;
+            - php artisan db:wipe --force ;
+            - php artisan migrate --seed --env=local ;
           env:
             - name: APP_KEY
               valueFrom:
@@ -353,10 +354,3 @@ spec:
                 name: kuhdo-portal-config
           {{ end }}
           {{- end }}
-          #lifecycle:
-          #  postStart:
-          #    exec:
-          #      command:
-          #        - /bin/sh
-          #        - -c
-          #        - wget -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/
