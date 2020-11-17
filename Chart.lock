@@ -8,5 +8,11 @@ dependencies:
 - name: minio
   repository: https://helm.min.io/
   version: 8.0.2
-digest: sha256:1b0f3f0f88727329a76c2c7afd0217a7158789a3a29ba5155a2e0c1c7868c336
-generated: "2020-11-16T19:54:17.54659+01:00"
+- name: database
+  repository: ""
+  version: 0.1.0
+- name: redis
+  repository: ""
+  version: 0.1.0
+digest: sha256:b1a65219afbd33f4ef4016a2c5fb8256dce30ab2a5bcaa4f7b1eb4cc1c3d1a86
+generated: "2020-11-17T11:47:24.545664+01:00"

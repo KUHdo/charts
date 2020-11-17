@@ -1,87 +1,97 @@
 # Default values for kuhdo-app.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-
-namespace: kuhdo-portal-test
+global:
+  namespace: kuhdo-portal-test-2
+namespace: |-
+  {{ .Values.global.namespace }}
 replicaCount: 1
-nameOverride: ""
-fullnameOverride: "KUHdo Web-App"
+nameOverride: "kuhdo-webapp"
+fullnameOverride: "kuhdo-web-app"
+
+# Environments descriptions
+tags:
+  production: false
+  staging: false
+  dynamic: true
+  local: true
 
 containers:
-  - web:
+  web:
     repository: kuhdo/web
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v1.5.2"
+    tag: "latest"
     port: 80
-  - app:
+  app:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v1.5.2"
+    tag: "1.4.2"
     port: 9000
     args: "prod"
-  - queue:
+  queue:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v1.5.2"
+    tag: "1.4.2"
     args: "queue"
-  - scheduler:
+  scheduler:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v1.5.2"
+    tag: "1.4.2"
     args: "scheduler"
-  - websockets:
+  websockets:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: "v1.5.2"
+    tag: "1.4.2"
     args: "websockets"
 
 # Configmap
 dotenv:
   APP_DEBUG: "false"
-  APP_ENV: production
-  APP_LOG_LEVEL: debug
-  APP_LOG_CHANNEL: errorlog
+  APP_ENV: "production"
+  APP_LOG_LEVEL: "debug"
+  APP_LOG_CHANNEL: "errorlog"
   APP_NAME: "KUHdo GmbH"
-  APP_URL: https://portal.kuhdo.de
-  BROADCAST_DRIVER: redis
-  CACHE_DRIVER: redis
-  QUEUE_DRIVER: redis
-  SESSION_DRIVER: redis
-  SESSION_DOMAIN: .portal.kuhdo.de
-  SESSION_CONNECTION: redis
-  DB_CONNECTION: mariadb
-  DB_DATABASE: homestead
-  DB_HOST: database-svc
-  DB_PASSWORD: secret
+  APP_URL: "https://portal.kuhdo.de"
+  BROADCAST_DRIVER: "redis"
+  CACHE_DRIVER: "redis"
+  QUEUE_DRIVER: "redis"
+  SESSION_DRIVER: "redis"
+  SESSION_DOMAIN: ".portal.kuhdo.de"
+  SESSION_CONNECTION: "redis"
+  DB_CONNECTION: "mariadb"
+  DB_DATABASE: "homestead"
+  DB_HOST: "database-svc"
+  DB_PASSWORD: "secret"
   DB_PORT: "3306"
-  DB_USERNAME: username
-  REDIS_HOST: redis-svc
+  DB_USERNAME: "username"
+  REDIS_HOST: "redis-svc"
   REDIS_PORT: "6379"
-  REDIS_CLIENT: phpredis
-  MAIL_MAILER: mailgun
-  MAIL_HOST: api.eu.mailgun.org
+  REDIS_CLIENT: "phpredis"
+  MAIL_MAILER: "mailgun"
+  MAIL_HOST: "api.eu.mailgun.org"
   MAIL_NAME: "KUHdo"
-  MAIL_PORT: "587"
-  MAIL_USERNAME: portal@email.kuhdo.de
-  MAIL_FROM_ADDRESS: no-reply@kuhdo.de
-  MAIL_ENCRYPTION: tls
-  MAILGUN_DOMAIN: email.kuhdo.de
-  MAILGUN_ENDPOINT: api.eu.mailgun.net
+  MAIL_PORT: 587
+  MAIL_USERNAME: "portal@email.kuhdo.de"
+  MAIL_FROM_ADDRESS: "no-reply@kuhdo.de"
+  MAIL_ENCRYPTION: "tls"
+  MAILGUN_DOMAIN: "email.kuhdo.de"
+  MAILGUN_ENDPOINT: "api.eu.mailgun.net"
   TELESCOPE_REQUEST_WATCHER: "false"
   TELESCOPE_ENABLED: "false"
-  EEX_SFTP_HOST: sftp.datasource.eex-group.com
-  MIX_VUE_APP_I18N_LOCALE: de
-  MIX_VUE_APP_I18N_FALLBACK_LOCALE: en
+  EEX_SFTP_HOST: "sftp.datasource.eex-group.com"
+  MIX_VUE_APP_I18N_LOCALE: "de"
+  MIX_VUE_APP_I18N_FALLBACK_LOCALE: "en"
 
 imageCredentials:
+  registry: docker.io
   username: user
-  password: accesskey
-  email: e-mail@domain.tld
+  password: access-token
+  email: e-mail@tld.de
 
 imagePullSecrets:
   - name: regcred
@@ -108,7 +118,7 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  type: ClusterIP
+  type: NodePort
   port: 80
 
 ingress:

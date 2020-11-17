@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: {{ .Values.global.namespace }}
+  name: {{ include "database.fullname" . }}
+  labels:
+  {{- include "database.labels" . | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+  {{- include "database.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      namespace: {{ .Values.global.namespace }}
+      {{- with .Values.podAnnotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+    {{- include "database.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          args:
+            - "--ignore-db-dir=lost+found"
+            - "--max-connections=1000"
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          env:
+            # Use secret in real usage
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.fullname" . }}-root-cred
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.fullname" . }}-user-creds
+                  key: MYSQL_DATABASE
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.fullname" . }}-user-creds
+                  key: MYSQL_USER
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "database.fullname" . }}-user-creds
+                  key: MYSQL_PASSWORD
+          volumeMounts:
+            - name: mariadb-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: {{ include "database.fullname" . }}-storage
+          persistentVolumeClaim:
+            claimName: {{ include "database.fullname" . }}-pv-claim

@@ -2,8 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kuhdo-portal-config
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.global.namespace }}
 data:
-  {{- range $name, $val := .Values.dotenv }}
-  {{ $name }}: {{ $val }}
-  {{- end }}
+  {{range $key, $value := (.Values.dotenv).items -}}
+  {{$key}}:{{$value}}
+  {{end}}

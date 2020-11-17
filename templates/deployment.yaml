@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "helm-webapp.fullname" . }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Values.global.namespace }}
 spec:
   replicas: {{ .Values.replicaCount}}
   minReadySeconds: 10
@@ -25,31 +25,29 @@ spec:
       labels:
     {{- include "helm-webapp.selectorLabels" . | nindent 8 }}
     spec:
-      {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-      {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: regcred
       restartPolicy: Always
       containers:
-        {{- range .Values.containers }}
-        - name: {{ . }}
-          image: {{ .repository }}:{{ .tag }}
-          {{ if .args }}
-          args: [{{ .args | quote}}]
+        {{- range $key, $config := .Values.containers }}
+        - name: {{ $key }}
+          image: {{ $config.repository }}:{{ $config.tag }}
+          {{ if $config.args }}
+          args: [{{ $config.args | quote}}]
           {{end}}
-          {{ if .port }}
+          {{ if $config.port }}
           ports:
-            - containerPort: {{ .port }}
+            - containerPort: {{ $config.port }}
           readinessProbe:
             initialDelaySeconds: 10
             periodSeconds: 10
             tcpSocket:
-              port: {{ .port }}
+              port: {{ $config.port }}
           livenessProbe:
             initialDelaySeconds: 10
             periodSeconds: 15
             tcpSocket:
-              port: {{ .port }}
+              port: {{ $config.port }}
             timeoutSeconds: 30
           {{ end }}
           resources: { }

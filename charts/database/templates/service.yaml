@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: {{ .Values.global.namespace }}
+  name: {{ include "database.fullname" . }}
+  labels:
+    {{- include "database.labels" . | nindent 4 }}
+spec:
+  ports:
+    - port: {{ .Values.service.port }}
+      protocol: TCP
+      name: {{ include "database.fullname" . }}
+  selector:
+    {{- include "database.selectorLabels" . | nindent 4 }}
