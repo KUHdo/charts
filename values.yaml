@@ -65,7 +65,7 @@ dotenv:
   REDIS_CLIENT: phpredis
   MAIL_MAILER: mailgun
   MAIL_HOST: api.eu.mailgun.org
-  MAIL_NAME: KUHdo
+  MAIL_NAME: "KUHdo"
   MAIL_PORT: "587"
   MAIL_USERNAME: portal@email.kuhdo.de
   MAIL_FROM_ADDRESS: no-reply@kuhdo.de

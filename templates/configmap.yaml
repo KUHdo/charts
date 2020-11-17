@@ -4,38 +4,6 @@ metadata:
   name: kuhdo-portal-config
   namespace: {{ .Values.namespace }}
 data:
-  APP_DEBUG: {{ .Values.dotenv.APP_DEBUG | default "false" }}
-  APP_ENV: {{ .Values.dotenv.APP_ENV | default "production" }}
-  APP_LOG_LEVEL: {{ .Values.dotenv.APP_LOG_LEVEL | default "debug" }}
-  APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL | default "errorlog" }}
-  APP_NAME: {{ .Values.dotenv.APP_NAME | default ""KUHdo GmbH"" }}
-  APP_URL: {{ .Values.dotenv.APP_URL | default "https://portal.kuhdo.de" }}
-  BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER | default "redis" }}
-  CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER | default "redis" }}
-  QUEUE_DRIVER: {{ .Values.dotenv.QUEUE_DRIVER | default "redis" }}
-  SESSION_DRIVER: {{ .Values.dotenv.SESSION_DRIVER | default "redis" }}
-  SESSION_DOMAIN: {{ .Values.dotenv.SESSION_DOMAIN | default ".portal.kuhdo.de" }}
-  SESSION_CONNECTION: {{ .Values.dotenv.SESSION_CONNECTION | default "redis" }}
-  DB_CONNECTION: {{ .Values.dotenv.DB_CONNECTION | default "mariadb" }}
-  DB_DATABASE: {{ .Values.dotenv.DB_DATABASE | default "homestead" }}
-  DB_HOST: {{ .Values.dotenv.DB_HOST | default "database-svc" }}
-  DB_PASSWORD: {{ .Values.dotenv.DB_PASSWORD | default "secret" }}
-  DB_PORT: {{ .Values.dotenv.DB_PORT | default 3306 }}
-  DB_USERNAME: {{ .Values.dotenv.DB_USERNAME | default "username" }}
-  REDIS_HOST: {{ .Values.dotenv.REDIS_HOST | default "redis-svc" }}
-  REDIS_PORT: {{ .Values.dotenv.REDIS_PORT | default 6379 }}
-  REDIS_CLIENT: {{ .Values.dotenv.REDIS_CLIENT | default "phpredis" }}
-  MAIL_MAILER: {{ .Values.dotenv.MAIL_MAILER | default "mailgun" }}
-  MAIL_HOST: {{ .Values.dotenv.MAIL_HOST | default "api.eu.mailgun.org" }}
-  MAIL_NAME: {{ .Values.dotenv.MAIL_NAME | default "KUHdo" }}
-  MAIL_PORT: {{ .Values.dotenv.MAIL_PORT | default 587 }}
-  MAIL_USERNAME: {{ .Values.dotenv.MAIL_USERNAME | default "portal@email.kuhdo.de" }}
-  MAIL_FROM_ADDRESS: {{ .Values.dotenv.MAIL_FROM_ADDRESS | default "no-reply@kuhdo.de" }}
-  MAIL_ENCRYPTION: {{ .Values.dotenv.MAIL_ENCRYPTION | default "tls" }}
-  MAILGUN_DOMAIN: {{ .Values.dotenv.MAILGUN_DOMAIN | default "email.kuhdo.de" }}
-  MAILGUN_ENDPOINT: {{ .Values.dotenv.MAILGUN_ENDPOINT | default "api.eu.mailgun.net" }}
-  TELESCOPE_REQUEST_WATCHER: {{ .Values.dotenv.TELESCOPE_REQUEST_WATCHER | default false }}
-  TELESCOPE_ENABLED: {{ .Values.dotenv.TELESCOPE_ENABLED | default false }}
-  EEX_SFTP_HOST: {{ .Values.dotenv.EEX_SFTP_HOST | default "sftp.datasource.eex-group.com" }}
-  MIX_VUE_APP_I18N_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_LOCALE | default "de" }}
-  MIX_VUE_APP_I18N_FALLBACK_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_FALLBACK_LOCALE | default "en" }}
+  {{- range $name, $val := .Values.dotenv }}
+  {{ $name }}: {{ $val }}
+  {{- end }}
