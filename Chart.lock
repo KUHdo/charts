@@ -4,15 +4,12 @@ dependencies:
   version: 5.0.1
 - name: redis
   repository: https://charts.bitnami.com/bitnami
-  version: 3.2.1
-- name: minio
-  repository: https://helm.min.io/
-  version: 8.0.2
+  version: 12.1.0
 - name: database
   repository: ""
   version: 0.1.0
-- name: redis
+- name: redis-local
   repository: ""
   version: 0.1.0
-digest: sha256:b1a65219afbd33f4ef4016a2c5fb8256dce30ab2a5bcaa4f7b1eb4cc1c3d1a86
-generated: "2020-11-17T11:47:24.545664+01:00"
+digest: sha256:dd40daac407e360ca81ab980d60e91b921615e0b4a38c16d13cceaebd70e4f1e
+generated: "2020-11-19T17:14:59.816376+01:00"

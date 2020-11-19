@@ -5,20 +5,15 @@
 # enable only one of those
 tags:
   production: false
-  staging: false
+  staging: true
   dynamic: false
-  local: true
+  local: false
 
-# Application namespace
-# global namespace links to namespace: but is
-# also available for sub charts
-global:
-  namespace: kuhdo-portal-test-2
-# this is for the parent chart
-namespace: |-
-  {{ .Values.global.namespace }}
 # deployment replicaCount of pod
 replicaCount: 1
+replicaMaxSurge: 1
+replicamaxUnavailable: 50%
+
 # meta data for selectors
 nameOverride: "kuhdo-webapp"
 fullnameOverride: "kuhdo-webapp"
@@ -94,20 +89,33 @@ dotenv:
 
 # Secrets for the laravel app container
 secrets:
-  APP_KEY: base64:sh8FW+fW3s62e8gg1LVwojlNP0wruH54/WAhsFnye3U=
-  EEX_SFTP_PASSWORD: supersecret
-  EEX_SFTP_REMOTE_PATH: /F:/EEX_Production/master/market_data/agricultural
-  EEX_SFTP_USERNAME: EEX_6..
-  LOG_SLACK_WEBHOOK_URL: supersecret
-  MAILGUN_SECRET: key-a05395e...
-  MAIL_PASSWORD: test123
-  MIX_STRIPE_KEY: supersecret
-  MIX_STRIPE_SECRET: supersecret
-  SLACK_WEBHOOK_URL: supersecret
-  STRIPE_KEY: supersecret
-  STRIPE_SECRET: supersecret
-  STRIPE_TAX_RATE: txr_1EPpn...
-  STRIPE_USER_PLAN: plan_DNd...1
+  webapp:
+    # APP_KEY should be filled for environments staging and production
+    # in a dynamic environment the APP_KEY should be empty to be generated
+    # via template: {{ include laravel.APP_KEY }}
+    APP_KEY: base64:sh8FW+fW3s62e8gg1LVwojlNP0wruH54/WAhsFnye3U=
+    EEX_SFTP_PASSWORD: supersecret
+    EEX_SFTP_REMOTE_PATH: /F:/EEX_Production/master/market_data/agricultural
+    EEX_SFTP_USERNAME: EEX_6..
+    LOG_SLACK_WEBHOOK_URL: supersecret
+    MAILGUN_SECRET: key-a05395e...
+    MAIL_PASSWORD: test123
+    MIX_STRIPE_KEY: supersecret
+    MIX_STRIPE_SECRET: supersecret
+    SLACK_WEBHOOK_URL: supersecret
+    STRIPE_KEY: supersecret
+    STRIPE_SECRET: supersecret
+    STRIPE_TAX_RATE: txr_1EPpn...
+    STRIPE_USER_PLAN: plan_DNd...1
+  database:
+    MYSQL_DATABASE: homestead
+    MYSQL_USER: homestead
+    MYSQL_PASSWORD: secret
+    MYSQL_ROOT_PASSWORD: supersecret
+    MARIADB_GALERA_MARIABACKUP_PASSWORD: backmeup
+  redis:
+    # if empty it gets generated
+    password:
 
 # docker registry credentials to be created regcred
 imageCredentials:
@@ -115,6 +123,7 @@ imageCredentials:
   username: arneba
   password: 7a3d0665-0f1a-47a6-9167-b877b9ea7def
   email: Arne.Bartelt@kuhdo.de
+
 #  Map of pull secrets if there are different for the images
 imagePullSecrets:
   - name: regcred
@@ -187,19 +196,35 @@ affinity: {}
 # Dependency values
 database:
   enabled: true
+
+mariadb-galera:
+  nameOverride: database
+  fullnameOverride: database
+  service:
+    type: ClusterIP
+  db:
+    user: homestead
+    password: secret
+    name: homestead
+  #existingSecret: kuhdo-webapp-db-root-cred
+  ##mariadb-root-password
+  ##mariadb-galera-mariabackup-password
+  ##mariadb-password
 redis:
-  enabled: true
+  nameOverride: redis
+  fullnameOverride: redis
   service:
     annotations: { }
-  serviceType: Nodeport
+  serviceType: ClusterIP
+  existingSecret: kuhdo-webapp-redis
   securityContext:
     enabled: false
   ## Cluster settings
   cluster:
     enabled: true
-    slaveCount: 3
+    slaveCount: 2
   metrics:
-    enabled: true
+    enabled: false
     # resources: {}
     # podAnnotations: {}
     # targetServiceAnnotations:

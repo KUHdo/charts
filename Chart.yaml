@@ -1,7 +1,7 @@
 apiVersion: v2
 name: helm-webapp
 description: A Helm chart for KUHdo web application
-kubeVersion: ^1.18.2
+kubeVersion: 1.19.2
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
@@ -32,17 +32,17 @@ dependencies:
       - production
       - staging
   - name: redis
-    version: 3.2.1
+    version: 12.1.0
     repository: "https://charts.bitnami.com/bitnami"
     tags:
       - production
       - staging
-  - name: minio
-    version: 8.0.2
-    repository: "https://helm.min.io/"
-    tags:
-      - production
-      - staging
+ # - name: minio
+ #   version: 8.0.2
+ #   repository: "https://helm.min.io/"
+ #   tags:
+ #     - production
+ #     - staging
   - name: database
     version: 0.1.0
     tags:

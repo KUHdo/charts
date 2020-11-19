@@ -69,3 +69,25 @@ Create a regcred secret form values
 {{- printf "{\"auths\":{\"%s\":{\"username\":\"%s\",\"password\":\"%s\",\"email\":\"%s\",\"auth\":\"%s\"}}}" .registry .username .password .email (printf "%s:%s" .username .password | b64enc) | b64enc }}
 {{- end }}
 {{- end }}
+
+{{/*
+Return Laravel APP_KEY
+*/}}
+{{- define "laravel.app_key" -}}
+{{- if not (empty .Values.secrets.APP_KEY) -}}
+    {{- .Values.secrets.APP_KEY -}}
+{{- else -}}
+    {{"base64:"}} {{- randAlphaNum 32 | b64enc -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return if environment is staging or production
+*/}}
+{{- define "prodstaging" -}}
+{{- if or (.Values.tags.staging) (.Values.tags.production) -}}
+    {{ true }}
+{{- else -}}
+    {{ false }}
+{{- end -}}
+{{- end -}}

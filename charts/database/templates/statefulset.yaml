@@ -33,7 +33,7 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "database.fullname" . }}-root-cred
+                  name: {{ include "database.fullname" . }}-db-root-cred
                   key: MYSQL_ROOT_PASSWORD
             - name: MYSQL_DATABASE
               valueFrom:
