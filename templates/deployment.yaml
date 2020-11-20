@@ -185,6 +185,8 @@ spec:
             - configMapRef:
                 name: {{ include "helm-webapp.fullname" . }}-config
           {{end}}
+      securityContext:
+      {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         {{- range $key, $config := .Values.containers }}
         - name: {{ $key }}
@@ -216,12 +218,19 @@ spec:
                   - /bin/sh
                   - -c
                   - wget -t 5 -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/
+          securityContext: {}
           {{ end }}
           resources: { }
           {{ if ne $key "web" }}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: {{ include "helm-webapp.fullname" $ }}-storage
-              mountPath: src/storage
+              mountPath: src/test
           env:
             - name: APP_KEY
               valueFrom:
