@@ -5,7 +5,7 @@
 # enable only one of those
 tags:
   production: false
-  staging: true
+  staging: false
   dynamic: false
   local: false
 
@@ -140,7 +140,7 @@ serviceAccount:
 podAnnotations: {}
 podSecurityContext:
   fsGroup: 1000
-  fsGroupChangePolicy: "OnRootMismatch"
+  #fsGroupChangePolicy: "OnRootMismatch"
 
 securityContext:
   runAsNonRoot: true
@@ -158,7 +158,7 @@ service:
 ingress:
   enabled: true
   annotations:
-     #kubernetes.io/ingress.class: traefik
+     kubernetes.io/ingress.class: traefik
      kubernetes.io/tls-acme: "true"
   hosts:
     - host: dev.kuhdo.local
@@ -166,9 +166,6 @@ ingress:
       port: 80
       name: web
   tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -198,6 +195,7 @@ affinity: {}
 # Dependency values
 database:
   enabled: true
+  existingSecretName: "kuhdo-webapp"
 
 mariadb-galera:
   nameOverride: database
