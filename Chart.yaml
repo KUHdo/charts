@@ -21,9 +21,9 @@ version: 0.1.1
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 1.4.2
-home: https://bitbucket.org/kuhdo/kubernetes-webapp/
+home: https://bitbucket.org/kuhdo/charts/
 sources:
-  - https://bitbucket.org/kuhdo/kubernetes-webapp/
+  - https://bitbucket.org/kuhdo/charts/
 dependencies:
   - name: mariadb-galera
     version: 5.0.1
