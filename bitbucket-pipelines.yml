@@ -35,11 +35,11 @@ pipelines:
       #- step: *credenv
       - step:
           # trigger: manual
-          name: Deploy to Kubernetes
+          name: Build helm repo
           deployment: staging
           image: dtzar/helm-kubectl:3.4.0
           script:
-            - mkdir -P tmp/charts
+            - mkdir -p tmp/charts
             - helm package . --destination tmp/charts
             - helm repo index .
             - pipe: atlassian/bitbucket-upload-file:0.3.2
