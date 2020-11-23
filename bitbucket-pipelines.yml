@@ -17,10 +17,9 @@ pipelines:
             - export access_token=$(curl -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
               https://bitbucket.org/site/oauth2/access_token \
               -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
-            - echo $BITBUCKET_WORKSPACE " " $BITBUCKET_REPO_FULL_NAME
             # Push charts to bitbucket downloads
             # loop through files and add -F files=@filename to curl command
             - >
               curl -X POST -H "Authorization: Bearer $access_token" \
-                https://api.bitbucket.org/2.0/repositories/"${BITBUCKET_WORKSPACE}"/"${BITBUCKET_REPO_FULL_NAME}"/downloads \
+                https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_FULL_NAME/downloads \
                 $(for f in tmp/charts/*.tgz index.yaml;do echo "-F files=@$f ";done)
