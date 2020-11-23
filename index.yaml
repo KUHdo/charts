@@ -1,0 +1,106 @@
+apiVersion: v1
+entries:
+  helm-webapp:
+  - apiVersion: v2
+    appVersion: 1.4.2
+    created: "2020-11-23T18:26:25.68243+01:00"
+    dependencies:
+    - name: mariadb-galera
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - production
+      - staging
+      version: 5.0.1
+    - name: redis
+      repository: https://charts.bitnami.com/bitnami
+      tags:
+      - production
+      - staging
+      version: 12.1.0
+    - name: database
+      repository: ""
+      tags:
+      - dynamic
+      - local
+      version: 0.1.0
+    - alias: redis-local
+      name: redis-local
+      repository: ""
+      tags:
+      - dynamic
+      - local
+      version: 0.1.0
+    description: A Helm chart for KUHdo web application
+    digest: cde47cde2c4db2b0fa627503ef93dc1ceb099efe563a889c43005181683508c7
+    home: https://bitbucket.org/kuhdo/charts/
+    kubeVersion: 1.18.9
+    maintainers:
+    - email: dev@kuhdo.de
+      name: KUHdo GmbH
+      url: https://www.kuhdo.de/team
+    name: helm-webapp
+    sources:
+    - https://bitbucket.org/kuhdo/charts/
+    type: application
+    urls:
+    - helm-webapp-0.1.1.tgz
+    version: 0.1.1
+  mariadb-galera:
+  - annotations:
+      category: Database
+    apiVersion: v2
+    appVersion: 10.5.8
+    created: "2020-11-23T18:26:25.685012+01:00"
+    description: MariaDB Galera is a multi-master database cluster solution for synchronous
+      replication and high availability.
+    digest: 594828e1ea68b646576c2c6de694bde49995ff2b2f2ca442a9be1942fafee660
+    home: https://github.com/bitnami/charts/tree/master/bitnami/mariadb-galera
+    icon: https://bitnami.com/assets/stacks/mariadb-galera/img/mariadb-galera-stack-220x234.png
+    keywords:
+    - mariadb
+    - mysql
+    - database
+    - sql
+    - prometheus
+    - galera
+    - percona
+    maintainers:
+    - email: containers@bitnami.com
+      name: Bitnami
+    name: mariadb-galera
+    sources:
+    - https://github.com/bitnami/bitnami-docker-mariadb-galera
+    - https://github.com/prometheus/mysqld_exporter
+    - https://mariadb.org
+    urls:
+    - charts/mariadb-galera-5.0.1.tgz
+    version: 5.0.1
+  redis:
+  - annotations:
+      category: Database
+    apiVersion: v2
+    appVersion: 6.0.9
+    created: "2020-11-23T18:26:25.688875+01:00"
+    description: Open source, advanced key-value store. It is often referred to as
+      a data structure server since keys can contain strings, hashes, lists, sets
+      and sorted sets.
+    digest: 308ce1260072158eee2dfd3347e2d1dd07397063e5d549e53f490e30fe1e275b
+    home: https://github.com/bitnami/charts/tree/master/bitnami/redis
+    icon: https://bitnami.com/assets/stacks/redis/img/redis-stack-220x234.png
+    keywords:
+    - redis
+    - keyvalue
+    - database
+    maintainers:
+    - email: containers@bitnami.com
+      name: Bitnami
+    - email: cedric@desaintmartin.fr
+      name: desaintmartin
+    name: redis
+    sources:
+    - https://github.com/bitnami/bitnami-docker-redis
+    - http://redis.io/
+    urls:
+    - charts/redis-12.1.0.tgz
+    version: 12.1.0
+generated: "2020-11-23T18:26:25.67264+01:00"
