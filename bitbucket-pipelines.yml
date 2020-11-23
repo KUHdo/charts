@@ -45,7 +45,7 @@ pipelines:
             - pipe: atlassian/bitbucket-upload-file:0.3.2
               variables:
                 BITBUCKET_USERNAME: '<string>'
-                BITBUCKET_APP_PASSWORD: '<string>'
+                BITBUCKET_APP_PASSWORD: $REPOSITORY_OAUTH_ACCESS_TOKEN@bitbucket.org
                 FILENAME: 'tmp/charts/helm-webapp-0.1.1.tgz'
                 # ACCOUNT: '<string>' # Optional
                 # REPOSITORY: '<string>' # Optional
