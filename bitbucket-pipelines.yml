@@ -11,7 +11,7 @@ pipelines:
           deployment: production
           image: dtzar/helm-kubectl:3.4.0
           script:
-            - sudo apk add jq
+            - apk add jq
             - mkdir -p tmp/charts
             - helm package . --destination tmp/charts
             - helm repo index .
