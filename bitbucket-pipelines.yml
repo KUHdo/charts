@@ -20,6 +20,7 @@ pipelines:
               -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
             # Push charts to bitbucket downloads
             # loop through files and add -F files=@filename to curl command
+            - ls -l tmp/charts/*.tgz
             - >
               curl -X POST -H "Authorization: Bearer $access_token" \
                 https://api.bitbucket.org/2.0/repositories/kuhdo/$BITBUCKET_REPO_SLUG/downloads \
