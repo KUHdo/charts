@@ -5,6 +5,7 @@ metadata:
   labels:
   {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
+  storageClassName: nfs-client
   accessModes:
     - ReadWriteMany
   resources:

@@ -79,112 +79,6 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "helm-webapp.fullname" . }}-config
-          {{ if false }}
-        - image: "{{ .Values.containers.app.repository}}:{{ .Values.containers.app.tag | default .Chart.AppVersion }}"
-          name: artisan-dynamic
-          imagePullPolicy: Always
-          command:
-            - /bin/sh
-            - -c
-            - php artisan db:wipe --force ;
-            - php artisan migrate --seed --env=local ;
-          env:
-            - name: APP_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: APP_KEY
-            - name: DB_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
-                  key: MYSQL_DATABASE
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-user-creds
-                  key: MYSQL_PASSWORD
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
-                  key: MYSQL_USER
-            {{ with (include "prodstaging" . )}}
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-redis
-                  key: redis-password
-            {{ end }}
-            - name: MAIL_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MAIL_PASSWORD
-            - name: MAILGUN_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MAILGUN_SECRET
-            - name: STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_KEY
-            - name: STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_SECRET
-            - name: MIX_STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_KEY
-            - name: MIX_STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_SECRET
-            - name: STRIPE_USER_PLAN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_USER_PLAN
-            - name: STRIPE_TAX_RATE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_TAX_RATE
-            - name: EEX_SFTP_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: EEX_SFTP_USERNAME
-            - name: EEX_SFTP_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: EEX_SFTP_PASSWORD
-            - name: EEX_SFTP_REMOTE_PATH
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: EEX_SFTP_REMOTE_PATH
-            - name: LOG_SLACK_WEBHOOK_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: LOG_SLACK_WEBHOOK_URL
-            - name: SLACK_WEBHOOK_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: SLACK_WEBHOOK_URL
-          envFrom:
-            - configMapRef:
-                name: {{ include "helm-webapp.fullname" . }}-config
-          {{end}}
       securityContext:
       {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -228,9 +122,9 @@ spec:
             capabilities:
               drop:
                 - ALL
-          volumeMounts:
-            - name: {{ include "helm-webapp.fullname" $ }}-storage
-              mountPath: src/test
+          #volumeMounts:
+          #  - name: {{ include "helm-webapp.fullname" $ }}-storage
+          #    mountPath: src/public/app/
           env:
             - name: APP_KEY
               valueFrom:

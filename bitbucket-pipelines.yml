@@ -1,0 +1,61 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image:
+  name: kuhdo/php-base-testing:7.4
+  username: $DOCKER_HUB_USERNAME
+  password: $DOCKER_HUB_PASSWORD
+
+definitions:
+  steps:
+    - step: &credenv
+        name: Generate auth files and write .env file
+        image: janniet/build-pipe
+        script:
+          # Generate auth.json
+          - echo '{"bitbucket-oauth":{ "bitbucket.org":{ "consumer-key":"'"$CONSUMER_KEY"'", "consumer-secret":"'"$CONSUMER_SECRET"'" } } }' >> auth.json
+          - export COMPOSER_AUTH=$(cat auth.json)
+          # Generate .npmrc
+          #- echo "_auth=$(echo -n ${REGISTRY_USER}':'${REGISTRY_SECRET} | openssl base64)" > .npmrc
+          - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+          - cp .env.pipeline .env.testing
+          - envsubst < .env.sample > .env
+        artifacts:
+          - auth.json
+          - .npmrc
+          - .env.testing
+          - .env
+          #paralel with phpunit groups and test suites
+
+pipelines:
+  branches:
+    master:
+      #- step: *credenv
+      - step:
+          # trigger: manual
+          name: Deploy to Kubernetes
+          deployment: staging
+          image: dtzar/helm-kubectl:3.4.0
+          script:
+            - mkdir -P tmp/charts
+            - helm package . --destination tmp/charts
+            - helm repo index .
+            - pipe: atlassian/bitbucket-upload-file:0.3.2
+              variables:
+                BITBUCKET_USERNAME: '<string>'
+                BITBUCKET_APP_PASSWORD: '<string>'
+                FILENAME: 'tmp/charts/helm-webapp-0.1.1.tgz'
+                # ACCOUNT: '<string>' # Optional
+                # REPOSITORY: '<string>' # Optional
+                # DEBUG: '<boolean>' # Optional
+            - pipe: atlassian/bitbucket-upload-file:0.3.2
+              variables:
+                BITBUCKET_USERNAME: '<string>'
+                BITBUCKET_APP_PASSWORD: '<string>'
+                FILENAME: 'index.yaml'
+                # ACCOUNT: '<string>' # Optional
+                # REPOSITORY: '<string>' # Optional
+                # DEBUG: '<boolean>' # Optional
+
