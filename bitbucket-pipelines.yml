@@ -23,5 +23,5 @@ pipelines:
             - ls -l tmp/charts/*.tgz
             - >
               curl -X POST -H "Authorization: Bearer $access_token" \
-                https://api.bitbucket.org/2.0/repositories/kuhdo/$BITBUCKET_REPO_SLUG/downloads \
+                https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads \
                 $(for f in tmp/charts/*.tgz index.yaml;do echo "-F files=@$f ";done)
