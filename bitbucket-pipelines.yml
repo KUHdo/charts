@@ -17,6 +17,7 @@ pipelines:
             - export access_token=$(curl -s -X POST -u "${CLIENT_ID}:${CLIENT_SECRET}" \
               https://bitbucket.org/site/oauth2/access_token \
               -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
-            - curl -X POST -H "Authorization: Bearer $access_token=" \
-              -X POST https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads \
-              -F files=@helm-webapp-0.1.1.tgz
+            - >
+              curl -X POST -H "Authorization: Bearer $access_token" \
+                https://api.bitbucket.org/2.0/repositories/"${BITBUCKET_WORKSPACE}"/"${BITBUCKET_REPO_FULL_NAME}"/downloads \
+                -F files=@tmp/charts/
