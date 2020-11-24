@@ -28,7 +28,8 @@ This is done via curl:
 - >
  curl -O -L -s -H "Authorization: Bearer $ACCESS_TOKEN" \
                 https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads/$CHARTNAME-$CHARTVERSION.tgz
-`````
+`````  
+
 ````yaml
 # First install with
 #- helm install kuhdo-webapp $CHARTNAME-$CHARTVERSION.tgz --set tags.local=true
