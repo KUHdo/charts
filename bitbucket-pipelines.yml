@@ -19,11 +19,18 @@ pipelines:
             - helm repo index .
             # Generate oauth access token which is 2 hours valid
             - export ACCESS_TOKEN=$(
-                curl --verbose --request POST \
-                    --user "$CLIENT_ID:$CLIENT_SECRET" \
-                    --data grant_type="client_credentials" --data scopes="repository"
-                    https://bitbucket.org/site/oauth2/access_token | jq --raw-output '.access_token'
+                curl -X POST \
+                     -u $CLIENT_ID:$CLIENT_SECRET \
+                     https://bitbucket.org/site/oauth2/access_token \
+                     --data grant_type="client_credentials" --data scopes="repository" \
+                     --verbose | jq --raw-output '.access_token'
               )
+            # Check if access token is empty
+            - >
+              if [ "$ACCESS_TOKEN" = "null" ]; then
+                  echo -e"\\e[31m✖ Error could not fetch access token\\e[0m";
+                  exit 1;
+              fi
             # Push charts to bitbucket downloads
             # loop through files and add -F files=@filename to curl command
             - >
@@ -32,10 +39,10 @@ pipelines:
                 HTTP_STATUS=$(
                   curl --write-out '%{http_code}' -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" \
                      https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads "-F files=@$f ");
-                if [ ! $HTTP_STATUS -eq 201 ]; then
+                if [ $HTTP_STATUS -eq 200 ]; then
+                  echo -e "\\e[32m✔ successfully uploaded: $f \\e[0m";
+                else
                   echo -e "\\e[36mINFO: Status: $HTTP_STATUS for file: $f\\e[0m";
                   echo -e "\\e[31m✖ Error: Could not be uploaded to https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads [Http Status: $HTTP_STATUS]"\\e[0m""; exit 1;
-                else
-                  echo -e "\\e[32m✔ successfully uploaded: $f \\e[0m";
                 fi
               done
