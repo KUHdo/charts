@@ -19,7 +19,7 @@ pipelines:
             - helm repo index .
             # Generate oauth access token which is 2 hours valid
             - >
-              if [[ -z "${$CLIENT_ID}" && -z "${$CLIENT_SECRET}" ]]; then
+              if [[ -z "${CLIENT_ID}" && -z "${CLIENT_SECRET}" ]]; then
                     echo -e "\\e[31m✖ Error $CLIENT_ID or $CLIENT_SECRET environment variable missing\\e[0m";
               fi
             - export ACCESS_TOKEN=$(
