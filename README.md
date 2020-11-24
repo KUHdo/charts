@@ -8,9 +8,9 @@ You have to establish the connection with your private bitbucket credentials via
 This is not very usefull for deployments. 
 
 ####  Add Helm Repo via pipline
-You need to set up an OAuth consumer in bitbucket first. Be carefull with the consumer.
-You set the permissions for the consumer for the whole workspace.
-At the moment there are no possebillities to shrink them to one repository only.
+You need to set up an OAuth consumer in bitbucket first. Be carefull with the consumer.  
+You set the permissions for the consumer for the whole workspace.  
+At the moment there are no possebillities to shrink them to one repository only.  
 After that you get a key and a secret.  
   
 Throw those two into your repository variables with the names: ``CLIENT_ID``  and ``CLIENT_SECRET``  
