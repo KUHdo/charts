@@ -33,7 +33,7 @@ pipelines:
                   curl --write-out '%{http_code}' -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" \
                      https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads "-F files=@$f ");
               if [ ! $HTTP_STATUS -eq 201 ]; then
-                info $f
+                echo -e "\\e[36mINFO: $f\\e[0m";
                 fail "Error: Could not be uploaded to https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads [Http Status: $HTTP_STATUS]";
               fi
               done
