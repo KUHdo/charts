@@ -3,7 +3,9 @@
 This is the official place for helm charts developed by KUHdo.
 ###  Add Helm Repo with bitbucket credentials  
 You may want to use this way for local development or minikube instances.  
+
 ``helm repo add kuhdo https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads --username ${BITBUCKET_USER} --password ${BITBUCKET_APP_PASSWORD}``  
+  
 You have to establish the connection with your private bitbucket credentials via the bitbucket app password or plain password. 
 This is not very usefull for deployments. 
 
