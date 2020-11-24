@@ -25,7 +25,8 @@ This is done via curl:
 ```yaml
 - export CHARTNAME=webapp
 - export CHARTVERSION=0.1.1
-- curl -O -L -s -H "Authorization: Bearer $ACCESS_TOKEN" \
+- >
+ curl -O -L -s -H "Authorization: Bearer $ACCESS_TOKEN" \
                 https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads/$CHARTNAME-$CHARTVERSION.tgz
 `````
 ````yaml
