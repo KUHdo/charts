@@ -1,0 +1,43 @@
+# This is a sample build for a "helm chart repo"
+# -----
+pipelines:
+  branches:
+    master:
+      - step:
+          name: Build helm repo
+          deployment: production
+          image: dtzar/helm-kubectl:3.4.0
+          script:
+            # Add dependency
+            - apk add jq
+            # Generating packed helm charts
+            - mkdir -p tmp/charts
+            - helm package . --destination tmp/charts
+            - helm repo index .
+            # Generate oauth access token which is 2 hours valid
+            - >
+              if [[ -z "${CLIENT_ID}" && -z "${CLIENT_SECRET}" ]]; then
+                    echo -e "\\e[31m✖ Error $CLIENT_ID or $CLIENT_SECRET environment variable missing\\e[0m";
+              fi
+            - export ACCESS_TOKEN=$( curl -X POST -u "$CLIENT_ID:$CLIENT_SECRET" https://bitbucket.org/site/oauth2/access_token -d grant_type=client_credentials -d scopes=repository  | jq --raw-output '.access_token')
+            # Check if access token is empty
+            - >
+              if [ "$ACCESS_TOKEN" = "null" ]; then
+                  echo -e"\\e[31m✖ Error could not fetch access token\\e[0m";
+                  exit 1;
+              fi
+            # Push charts to bitbucket downloads
+            # loop through files and add -F files=@filename to curl command
+            - >
+              for f in tmp/charts/*.tgz index.yaml;
+              do
+                HTTP_STATUS=$(
+                  curl --write-out '%{http_code}' -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+                     https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads "-F files=@$f ");
+                if [ $HTTP_STATUS -eq 201 ]; then
+                  echo -e "\\e[32m✔ successfully uploaded: $f \\e[0m";
+                else
+                  echo -e "\\e[36mINFO: Status: $HTTP_STATUS for file: $f\\e[0m";
+                  echo -e "\\e[31m✖ Error: Could not be uploaded to https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads [Http Status: $HTTP_STATUS]"\\e[0m""; exit 1;
+                fi
+              done
