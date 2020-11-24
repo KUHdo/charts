@@ -1,4 +1,4 @@
-#KUHdo Helm Charts
+# KUHdo Helm Charts
 
 This is the official place for helm charts developed by KUHdo.
 ####  Add Helm Repo with bitbucket credentials  
