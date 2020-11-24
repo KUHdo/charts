@@ -15,7 +15,7 @@ After that you get a key and a secret.
   
 Throw those two into your repository variables with the names: ``CLIENT_ID``  and ``CLIENT_SECRET``  
 Now your able to create an access_key which is actually valid for 2 hours.
-This is done via curl:
+Some pipline snippets for copy cats:
 ````yaml 
   # Generate OAuth access token which is 2 hours valid
   - >
@@ -28,11 +28,7 @@ This is done via curl:
 - >
  curl -O -L -s -H "Authorization: Bearer $ACCESS_TOKEN" \
                 https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads/$CHARTNAME-$CHARTVERSION.tgz
-`````  
-
-````yaml 
-# First install with
-#- helm install kuhdo-webapp $CHARTNAME-$CHARTVERSION.tgz --set tags.local=true
+# helm install with
 - helm upgrade -n kuhdo-local --install kuhdo-webapp $CHARTNAME-$CHARTVERSION.tgz --set tags.local=true --create-namespace
 ````
 ---
