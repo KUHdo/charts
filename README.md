@@ -22,7 +22,7 @@ This is done via curl:
     if [[ -z "${CLIENT_ID}" && -z "${CLIENT_SECRET}" ]]; then echo -e "\\e[31m✖ Error $CLIENT_ID or $CLIENT_SECRET environment variable missing\\e[0m"; fi
   - export ACCESS_TOKEN=$( curl -s -X POST -u "$CLIENT_ID:$CLIENT_SECRET" https://bitbucket.org/site/oauth2/access_token -d grant_type=client_credentials -d scopes=repository  | jq --raw-output '.access_token')
 ```  
-```bash
+```yaml
 - export CHARTNAME=webapp
 - export CHARTVERSION=0.1.1
 - curl -O -L -s -H "Authorization: Bearer $ACCESS_TOKEN" \
