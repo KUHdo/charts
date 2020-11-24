@@ -1,8 +1,5 @@
-# This is a sample build configuration for PHP.
-# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
-# Only use spaces to indent your .yml configuration.
+# This is a sample build for a "helm chart repo"
 # -----
-# You can specify a custom docker image from Docker Hub as your build environment.
 pipelines:
   branches:
     master:
@@ -15,8 +12,8 @@ pipelines:
             - apk add jq
             # Generating packed helm charts
             - mkdir -p tmp/charts
-            - helm package . --destination tmp/charts
-            - helm repo index .
+            - for d in charts/*/ ; do helm package $d --destination tmp/charts; done
+            - helm repo index tmp/charts
             # Generate oauth access token which is 2 hours valid
             - >
               if [[ -z "${CLIENT_ID}" && -z "${CLIENT_SECRET}" ]]; then
@@ -32,7 +29,7 @@ pipelines:
             # Push charts to bitbucket downloads
             # loop through files and add -F files=@filename to curl command
             - >
-              for f in tmp/charts/*.tgz index.yaml;
+              for f in tmp/charts/*.tgz tmp/charts/index.yaml;
               do
                 HTTP_STATUS=$(
                   curl --write-out '%{http_code}' -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" \
