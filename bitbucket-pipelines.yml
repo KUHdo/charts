@@ -11,16 +11,29 @@ pipelines:
           deployment: production
           image: dtzar/helm-kubectl:3.4.0
           script:
+            # Add dependency
             - apk add jq
+            # Generating packed helm charts
             - mkdir -p tmp/charts
             - helm package . --destination tmp/charts
             - helm repo index .
-            - export ACCESS_TOKEN=$(curl -s -X POST -u "${CLIENT_ID}:${$CLIENT_SECRET}" \
-              https://bitbucket.org/site/oauth2/access_token \
-              -d grant_type=client_credentials -d scopes="repository"| jq --raw-output '.access_token')
+            # Generate oauth access token which is 2 hours valid
+            - export ACCESS_TOKEN=$(
+                curl -s -X POST -u "$CLIENT_ID:$CLIENT_SECRET" \
+                    https://bitbucket.org/site/oauth2/access_token \
+                    -d grant_type=client_credentials -d scopes="repository"|
+                    jq --raw-output '.access_token'
+              )
             # Push charts to bitbucket downloads
             # loop through files and add -F files=@filename to curl command
             - >
-              curl -X POST -H "Authorization: Bearer $access_token" \
-                https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads \
-                $(for f in tmp/charts/*.tgz index.yaml;do echo "-F files=@$f ";done)
+              for f in tmp/charts/*.tgz index.yaml;
+              do
+                HTTP_STATUS=$(
+                  curl --write-out '%{http_code}' -X POST -H "Authorization: Bearer ${ACCESS_TOKEN}" \
+                     https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads "-F files=@$f ");
+              if [ ! $HTTP_STATUS -eq 201 ]; then
+                info $f
+                fail "Error: Could not be uploaded to https://api.bitbucket.org/2.0/repositories/$BITBUCKET_REPO_OWNER/$BITBUCKET_REPO_SLUG/downloads [Http Status: $HTTP_STATUS]";
+              fi
+              done
