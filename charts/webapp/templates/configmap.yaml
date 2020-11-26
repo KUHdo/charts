@@ -16,7 +16,7 @@ data:
   SESSION_DOMAIN: {{ .Values.dotenv.SESSION_DOMAIN  | quote}}
   SESSION_CONNECTION: {{ .Values.dotenv.SESSION_CONNECTION  | quote}}
   DB_CONNECTION: {{ .Values.dotenv.DB_CONNECTION  | quote}}
-  DB_HOST: {{- if eq (include "prodstaging" .) "true" -}} {{ "database-svc" }}  {{ else}} {{ "database"}} {{ end }}
+  DB_HOST: {{- if eq (include "prodstaging" .) "true" -}} {{ "database" }}  {{ else}} {{ "database-svc"}} {{ end }}
   DB_PORT: {{ .Values.dotenv.DB_PORT  | quote}}
   REDIS_HOST: {{ if eq (include "prodstaging" .) "true" -}} "redis-master" {{ else }} "redis-svc" {{end}}
   REDIS_PORT: {{ .Values.dotenv.REDIS_PORT  | quote}}

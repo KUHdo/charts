@@ -113,6 +113,9 @@ spec:
                   - -c
                   - wget -t 5 -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/
           securityContext: {}
+          volumeMounts:
+            - name: {{ include "helm-webapp.fullname" $ }}-storage
+              mountPath: src/public/
           {{ end }}
           resources: { }
           {{ if ne $key "web" }}
@@ -122,9 +125,9 @@ spec:
             capabilities:
               drop:
                 - ALL
-          #volumeMounts:
-          #  - name: {{ include "helm-webapp.fullname" $ }}-storage
-          #    mountPath: src/public/app/
+          volumeMounts:
+            - name: {{ include "helm-webapp.fullname" $ }}-storage
+              mountPath: src/storage/app/public/
           env:
             - name: APP_KEY
               valueFrom:
