@@ -45,7 +45,8 @@ spec:
             {{ if .Values.tags.dynamic}}
             - php artisan db:wipe ;
             - php artisan migrate --seed --env=local ;
-            {{ end }}
+            - php artisan storage:link ;
+          {{ end }}
           env:
             {{- range $key, $value := .Values.secrets.webapp }}
             - name: {{ $key }}
