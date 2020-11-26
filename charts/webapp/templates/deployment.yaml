@@ -116,7 +116,8 @@ spec:
           securityContext: {}
           volumeMounts:
             - name: {{ include "helm-webapp.fullname" $ }}-storage
-              mountPath: src/public/
+              ## TODO: create symlink from /src/public/storage/ to /src/storage/app/public
+              mountPath: storage
           {{ end }}
           resources: { }
           {{ if ne $key "web" }}
@@ -128,7 +129,7 @@ spec:
                 - ALL
           volumeMounts:
             - name: {{ include "helm-webapp.fullname" $ }}-storage
-              mountPath: src/storage/app/public/
+              mountPath: src/storage/app/
           env:
             - name: APP_KEY
               valueFrom:
