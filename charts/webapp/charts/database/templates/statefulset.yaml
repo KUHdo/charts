@@ -54,4 +54,4 @@ spec:
       volumes:
         - name: {{ include "database.fullname" . }}-storage
           persistentVolumeClaim:
-            claimName: {{ include "database.fullname" . }}-pv-claim
+            claimName: {{ include "database.fullname" . }}-db-pv-claim

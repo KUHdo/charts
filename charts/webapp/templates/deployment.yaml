@@ -69,7 +69,7 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
                   key: MYSQL_USER
-            {{ with (include "prodstaging" . )}}
+            {{ if eq (include "prodstaging" .) "true" -}}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:

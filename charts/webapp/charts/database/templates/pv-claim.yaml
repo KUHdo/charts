@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "database.fullname" . }}-pv-claim
+  name: {{ include "database.fullname" . }}-db-pv-claim
   labels:
   {{- include "database.labels" . | nindent 4 }}
 spec:

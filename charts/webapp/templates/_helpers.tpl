@@ -81,15 +81,28 @@ Return Laravel APP_KEY
 {{- end -}}
 {{- end -}}
 
+
+{{/*
+Detect if `.Values.tags.production` or `.Values.tags.staging` is set
+Returns true if it is a boolean,
+Return false in any other case.
+*/}}
+{{- define "prodstaging" -}}
+{{- $prodValue := and (hasKey .Values.tags "production") (kindIs "bool" .Values.tags.production)  }}
+{{- $stagingValue := and (hasKey .Values.tags "staging") (kindIs "bool" .Values.tags.staging)  }}
+{{- if or $prodValue $stagingValue }}
+{{- (or .Values.tags.production .Values.tags.staging) }}
+{{- end }}
+{{- end }}
+
+
 {{/*
 Return if environment is staging or production
 */}}
-{{- define "prodstaging" -}}
-{{- if or (.Values.tags.staging) (.Values.tags.production) -}}
-    {{ true }}
-{{- else -}}
-    {{ false }}
-{{- end -}}
+{{- define "dynamiclocal" -}}
+{{- $dynamicValue := and (hasKey .Values.tags "dynamic") (kindIs "bool" .Values.tags.dynamic)  }}
+{{- $localValue := and (hasKey .Values.tags "local") (kindIs "bool" .Values.tags.local)  }}
+{{- (or .Values.tags.dynamic .Values.tags.local) }}
 {{- end -}}
 
 {{/*

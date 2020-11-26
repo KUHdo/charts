@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   namespace: {{ .Values.global.namespace }}
-  name: {{ include "redis.fullname" . }}-pv-claim
+  name: {{ include "redis.fullname" . }}-redis-pv-claim
   labels:
   {{- include "redis.labels" . | nindent 4 }}
 spec:
