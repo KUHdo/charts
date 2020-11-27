@@ -115,7 +115,7 @@ secrets:
     MARIADB_GALERA_MARIABACKUP_PASSWORD: backmeup
   redis:
     # if empty it gets generated
-    password:
+    password: testing
 
 # docker registry credentials to be created regcred
 imageCredentials:
@@ -222,7 +222,8 @@ redis:
   service:
     annotations: { }
   serviceType: ClusterIP
-  existingSecret: kuhdo-webapp-redis
+  password: testing
+  #existingSecret: kuhdo-webapp-redis
   securityContext:
     enabled: false
   ## Cluster settings

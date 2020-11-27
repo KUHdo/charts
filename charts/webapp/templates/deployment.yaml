@@ -212,6 +212,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: SLACK_WEBHOOK_URL
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-webapp.fullname" $ }}-redis
+                  key: redis-password
           envFrom:
             - configMapRef:
                 name: {{ include "helm-webapp.fullname" $ }}-config
