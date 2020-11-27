@@ -24,7 +24,7 @@ containers:
   web:
     # image and version of the container
     repository: kuhdo/web
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     # Overrides the image tag whose default is the chart appVersion.
     tag: "latest"
     # live- and readiness probe is only set  if
@@ -59,7 +59,7 @@ dotenv:
   APP_LOG_LEVEL: "debug"
   APP_LOG_CHANNEL: "errorlog"
   APP_NAME: "KUHdo GmbH"
-  APP_URL: "https://portal.kuhdo.de"
+  APP_URL: "http://portal.kuhdo.de"
   BROADCAST_DRIVER: "redis"
   CACHE_DRIVER: "redis"
   QUEUE_DRIVER: "redis"
@@ -68,7 +68,7 @@ dotenv:
   SESSION_CONNECTION: "redis"
   DB_CONNECTION: "mariadb"
   DB_HOST: "database-svc"
-  DB_PORT: "3306"
+  DB_PORT: 3306
   REDIS_HOST: "redis-svc"
   REDIS_PORT: "6379"
   REDIS_CLIENT: "phpredis"
@@ -156,15 +156,21 @@ service:
   port: 80
 
 ingress:
-  enabled: true
+  enabled: false
   annotations:
-     kubernetes.io/ingress.class: traefik
+     kubernetes.io/ingress.class: "nginx"
      kubernetes.io/tls-acme: "true"
   hosts:
-    - host: dev.kuhdo.local
+    web:
+      name: web
+      host: dev.kuhdo.local
       paths: [/]
       port: 80
-      name: web
+    websockets:
+      name: websockets
+      host: ws.dev.kuhdo.local
+      paths: [ / ]
+      port: 6001
   tls: []
 
 resources: {}

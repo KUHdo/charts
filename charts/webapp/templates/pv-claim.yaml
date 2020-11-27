@@ -5,11 +5,11 @@ metadata:
   labels:
   {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
-  {{- if eq (include "prodstaging" .) "true" -}}
+  {{- if eq (include "prodstaging" .) "true" }}
   storageClassName: nfs-client
   {{- end }}
   accessModes:
-  {{- if eq (include "prodstaging" .) "true" -}}
+  {{ if eq (include "prodstaging" .) "true" }}
     - ReadWriteMany
   {{- else }}
     - ReadWriteOnce

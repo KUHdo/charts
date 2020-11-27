@@ -3,28 +3,28 @@ kind: ConfigMap
 metadata:
   name: {{ include "helm-webapp.fullname" . }}-config
 data:
-  APP_DEBUG: {{ .Values.dotenv.APP_DEBUG | default false  | quote}}
-  APP_ENV: {{ .Values.dotenv.APP_ENV  | default "production" quote}}
-  APP_LOG_LEVEL: {{ .Values.dotenv.APP_LOG_LEVEL  | default "debug" |quote}}
-  APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | quote}}
+  APP_DEBUG: {{ .Values.dotenv.APP_DEBUG | default false  | quote }}
+  APP_ENV: {{ .Values.dotenv.APP_ENV  | default "production" quote }}
+  APP_LOG_LEVEL: {{ .Values.dotenv.APP_LOG_LEVEL  | default "debug" | quote }}
+  APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   APP_NAME: {{ .Values.dotenv.APP_NAME  | quote}}
-  APP_URL: {{ .Values.dotenv.APP_URL  | quote}}
-  BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER  | quote}}
-  CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER  | quote}}
-  QUEUE_DRIVER: {{ .Values.dotenv.QUEUE_DRIVER  | quote}}
-  SESSION_DRIVER: {{ .Values.dotenv.SESSION_DRIVER  | quote}}
-  SESSION_DOMAIN: {{ .Values.dotenv.SESSION_DOMAIN  | quote}}
-  SESSION_CONNECTION: {{ .Values.dotenv.SESSION_CONNECTION  | quote}}
-  DB_CONNECTION: {{ .Values.dotenv.DB_CONNECTION  | quote}}
-  DB_HOST: {{- if eq (include "prodstaging" .) "true" -}} {{ "database" }}  {{ else}} {{ "database-svc"}} {{ end }}
-  DB_PORT: {{ .Values.dotenv.DB_PORT  | quote}}
-  REDIS_HOST: {{ if eq (include "prodstaging" .) "true" -}} "redis-master" {{ else }} "redis-svc" {{end}}
-  REDIS_PORT: {{ .Values.dotenv.REDIS_PORT  | quote}}
-  REDIS_CLIENT: {{ .Values.dotenv.REDIS_CLIENT  | quote}}
-  MAIL_MAILER: {{ .Values.dotenv.MAIL_MAILER  | quote}}
-  MAIL_HOST: {{ .Values.dotenv.MAIL_HOST  | quote}}
-  MAIL_NAME: {{ .Values.dotenv.MAIL_NAME  | quote}}
-  MAIL_PORT: {{ .Values.dotenv.MAIL_PORT  | quote}}
+  APP_URL: {{ .Values.dotenv.APP_URL  | quote }}
+  BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER  | quote }}
+  CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER  | quote }}
+  QUEUE_DRIVER: {{ .Values.dotenv.QUEUE_DRIVER  | quote }}
+  SESSION_DRIVER: {{ .Values.dotenv.SESSION_DRIVER  | quote }}
+  SESSION_DOMAIN: {{ .Values.dotenv.SESSION_DOMAIN  | quote }}
+  SESSION_CONNECTION: {{ .Values.dotenv.SESSION_CONNECTION  | quote }}
+  DB_CONNECTION: {{ .Values.dotenv.DB_CONNECTION  | quote }}
+  #DB_HOST: {{- if eq (include "prodstaging" .) "true" -}} {{- "database" -}}  {{- else -}} {{- "database-svc" -}} {{- end -}}
+  DB_PORT: {{ .Values.dotenv.DB_PORT | quote }}
+  #REDIS_HOST: {{- if eq (include "prodstaging" .) "true" -}} "redis-master" {{- else -}} "redis-svc" {{- end -}}
+  REDIS_PORT: {{ .Values.dotenv.REDIS_PORT | quote }}
+  REDIS_CLIENT: {{ .Values.dotenv.REDIS_CLIENT  | quote }}
+  MAIL_MAILER: {{ .Values.dotenv.MAIL_MAILER | quote }}
+  MAIL_HOST: {{ .Values.dotenv.MAIL_HOST  | quote }}
+  MAIL_NAME: {{ .Values.dotenv.MAIL_NAME  | quote }}
+  MAIL_PORT: {{ .Values.dotenv.MAIL_PORT | quote }}
   MAIL_USERNAME: {{ .Values.dotenv.MAIL_USERNAME  | quote}}
   MAIL_FROM_ADDRESS: {{ .Values.dotenv.MAIL_FROM_ADDRESS  | quote}}
   MAIL_ENCRYPTION: {{ .Values.dotenv.MAIL_ENCRYPTION  | quote}}

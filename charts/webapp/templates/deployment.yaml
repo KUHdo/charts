@@ -106,17 +106,13 @@ spec:
             timeoutSeconds: 30
           {{ end }}
           {{ if eq $key "web"}}
-          lifecycle:
-            postStart:
-              exec:
-                command:
-                  - /bin/sh
-                  - -c
-                  - wget -t 5 -O- --post-data='"localhost:9000"' --header="Content-Type:application/json" http://localhost:2019/config/apps/http/servers/srv0/routes/3/handle/0/upstreams/0/dial/
-          securityContext: {}
+          env:
+            - name: PHP_UP_STREAM_HOST
+              value: "localhost"
+            - name: PHP_UP_STREAM_PORT
+              value: "9000"
           volumeMounts:
             - name: {{ include "helm-webapp.fullname" $ }}-storage
-              ## TODO: create symlink from /src/public/storage/ to /src/storage/app/public
               mountPath: storage
           {{ end }}
           resources: { }

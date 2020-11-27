@@ -1,6 +1,5 @@
 {{- if .Values.ingress.enabled -}}
 {{- $fullName := include "helm-webapp.fullname" . -}}
-{{- $svcPort := .Values.service.port -}}
 {{- $apiVersion := include "networkPolicy.apiVersion" . }}
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: Ingress
@@ -25,20 +24,23 @@ spec:
   {{- end }}
   rules:
     {{- range .Values.ingress.hosts }}
-    - http:
+    - host: {{ .host | quote }}
+      http:
         paths:
+          {{- $name := .name }}
+          {{- $port := .port }}
           {{- range .paths }}
           - path: {{ . }}
             pathType: Prefix
             backend:
               {{ if eq $apiVersion "networking.k8s.io/v1beta1" }}
-              serviceName: {{ $fullName }}-web
-              servicePort: {{ $svcPort }}
+              serviceName: {{ $fullName }}-{{ $name }}
+              servicePort: {{ $port }}
               {{ else }}
               service:
-                name: {{ $fullName }}-web
+                name: {{ $fullName }}-{{ $name }}
                 port:
-                  number: {{ $svcPort }}
+                  number: {{ $port }}
               {{ end }}
           {{- end }}
     {{- end }}
