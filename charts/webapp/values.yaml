@@ -119,10 +119,14 @@ secrets:
 
 # docker registry credentials to be created regcred
 imageCredentials:
+  # registry host address
   registry: docker.io
+  # registry username
   username: arneba
+  # Recommended to use an access key
   password: 7a3d0665-0f1a-47a6-9167-b877b9ea7def
-  email: Arne.Bartelt@kuhdo.de
+  # registry e-mail address
+  email: dev@kuhdo.de
 
 #  Map of pull secrets if there are different for the images
 imagePullSecrets:
@@ -158,8 +162,8 @@ service:
 ingress:
   enabled: false
   annotations:
-     kubernetes.io/ingress.class: "nginx"
-     kubernetes.io/tls-acme: "true"
+     kubernetes.io/ingress.class: "traefik"
+     kubernetes.io/tls-acme: true
   hosts:
     web:
       name: web

@@ -7,23 +7,23 @@ data:
   APP_ENV: {{ .Values.dotenv.APP_ENV  | default "production" quote }}
   APP_LOG_LEVEL: {{ .Values.dotenv.APP_LOG_LEVEL  | default "debug" | quote }}
   APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
-  APP_NAME: {{ .Values.dotenv.APP_NAME  | quote}}
-  APP_URL: {{ .Values.dotenv.APP_URL  | quote }}
-  BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER  | quote }}
-  CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER  | quote }}
-  QUEUE_DRIVER: {{ .Values.dotenv.QUEUE_DRIVER  | quote }}
-  SESSION_DRIVER: {{ .Values.dotenv.SESSION_DRIVER  | quote }}
+  APP_NAME: {{ .Values.dotenv.APP_NAME  | default "KUHdo Gmbh" | quote}}
+  APP_URL: {{ .Values.dotenv.APP_URL | default "https://portal.kuhdo.de" | quote }}
+  BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER | default "redis"  | quote }}
+  CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER  | default "redis" | quote }}
+  QUEUE_DRIVER: {{ .Values.dotenv.QUEUE_DRIVER  | default "redis" | quote }}
+  SESSION_DRIVER: {{ .Values.dotenv.SESSION_DRIVER  | default "redis" | quote }}
   SESSION_DOMAIN: {{ .Values.dotenv.SESSION_DOMAIN  | quote }}
-  SESSION_CONNECTION: {{ .Values.dotenv.SESSION_CONNECTION  | quote }}
-  DB_CONNECTION: {{ .Values.dotenv.DB_CONNECTION  | quote }}
-  DB_HOST: {{- if eq (include "prodstaging" .) "true" }} "database" {{- else }} {{- "database-svc" }} {{- end }}
-  DB_PORT: {{ .Values.dotenv.DB_PORT | quote }}
+  SESSION_CONNECTION: {{ .Values.dotenv.SESSION_CONNECTION  | default "redis"  | quote }}
+  DB_CONNECTION: {{ .Values.dotenv.DB_CONNECTION  | default "mariadb" | quote }}
+  DB_HOST: {{- if eq (include "prodstaging" .) "true" }} "database" {{- else }} "database-svc" {{- end }}
+  DB_PORT: {{ .Values.dotenv.DB_PORT | default 3306 | quote }}
   REDIS_HOST: {{- if eq (include "prodstaging" .) "true" }} "redis-master" {{- else }} "redis-svc" {{- end }}
-  REDIS_PORT: {{ .Values.dotenv.REDIS_PORT | quote }}
-  REDIS_CLIENT: {{ .Values.dotenv.REDIS_CLIENT  | quote }}
+  REDIS_PORT: {{ .Values.dotenv.REDIS_PORT | default 6379 | quote }}
+  REDIS_CLIENT: {{ .Values.dotenv.REDIS_CLIENT | default "phpredis" | quote }}
   MAIL_MAILER: {{ .Values.dotenv.MAIL_MAILER | quote }}
-  MAIL_HOST: {{ .Values.dotenv.MAIL_HOST  | quote }}
-  MAIL_NAME: {{ .Values.dotenv.MAIL_NAME  | quote }}
+  MAIL_HOST: {{ .Values.dotenv.MAIL_HOST | quote }}
+  MAIL_NAME: {{ .Values.dotenv.MAIL_NAME | quote }}
   MAIL_PORT: {{ .Values.dotenv.MAIL_PORT | quote }}
   MAIL_USERNAME: {{ .Values.dotenv.MAIL_USERNAME  | quote}}
   MAIL_FROM_ADDRESS: {{ .Values.dotenv.MAIL_FROM_ADDRESS  | quote}}
@@ -33,5 +33,5 @@ data:
   TELESCOPE_REQUEST_WATCHER: {{ .Values.dotenv.TELESCOPE_REQUEST_WATCHER  | quote}}
   TELESCOPE_ENABLED: {{ .Values.dotenv.TELESCOPE_ENABLED  | quote}}
   EEX_SFTP_HOST: {{ .Values.dotenv.EEX_SFTP_HOST  | quote}}
-  MIX_VUE_APP_I18N_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_LOCALE  | quote}}
-  MIX_VUE_APP_I18N_FALLBACK_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_FALLBACK_LOCALE  | quote}}
+  MIX_VUE_APP_I18N_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_LOCALE | quote}}
+  MIX_VUE_APP_I18N_FALLBACK_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_FALLBACK_LOCALE | quote}}
