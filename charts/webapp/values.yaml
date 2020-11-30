@@ -163,7 +163,7 @@ ingress:
   enabled: false
   annotations:
      kubernetes.io/ingress.class: "traefik"
-     kubernetes.io/tls-acme: true
+     kubernetes.io/tls-acme: "true"
   hosts:
     web:
       name: web
