@@ -217,6 +217,10 @@ mariadb-galera:
     user: homestead
     password: secret
     name: homestead
+  galera:
+    bootstrap:
+      forceSafeToBootstrap: true
+      bootstrapFromNode: 0
   #existingSecret: kuhdo-webapp-db-root-cred
   ##mariadb-root-password
   ##mariadb-galera-mariabackup-password
