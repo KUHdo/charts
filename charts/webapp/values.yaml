@@ -156,8 +156,9 @@ securityContext:
   #readOnlyRootFilesystem: true
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 80
+  targetPort: http
 
 ingress:
   enabled: false
