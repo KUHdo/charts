@@ -8,6 +8,7 @@ spec:
   type: {{  .Values.service.type }}
   ports:
     - port: {{ .Values.service.port }}
+      targetPort: http
       protocol: TCP
       name: {{ include "helm-webapp.fullname" .  | kebabcase }}-web
   selector:
