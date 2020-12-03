@@ -122,9 +122,9 @@ imageCredentials:
   # registry host address
   registry: docker.io
   # registry username
-  username: arneba
+  username: dockeruser
   # Recommended to use an access key
-  password: 7a3d0665-0f1a-47a6-9167-b877b9ea7def
+  password: 7a3...
   # registry e-mail address
   email: dev@kuhdo.de
 
