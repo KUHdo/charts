@@ -92,17 +92,18 @@ spec:
           {{end}}
           {{ if $config.port }}
           ports:
-            - containerPort: {{ $config.port }}
+            - name: {{ $config.portName }}
+              containerPort: {{ $config.port }}
           readinessProbe:
             initialDelaySeconds: 10
             periodSeconds: 10
             tcpSocket:
-              port: {{ $config.port }}
+              port: {{ $config.portName }}
           livenessProbe:
             initialDelaySeconds: 10
             periodSeconds: 15
             tcpSocket:
-              port: {{ $config.port }}
+              port: {{ $config.portName }}
             timeoutSeconds: 30
           {{ end }}
           {{ if eq $key "web"}}
