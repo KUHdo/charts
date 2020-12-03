@@ -167,7 +167,6 @@ ingress:
   annotations:
      kubernetes.io/ingress.class: "traefik"
      kubernetes.io/tls-acme: "true"
-     traefik.ingress.kubernetes.io/preserve-host: "true"
   hosts:
     web:
       name: web
