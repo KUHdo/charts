@@ -8,7 +8,7 @@ spec:
   type: {{  .Values.service.type }}
   ports:
     - port: 80
-      targetPort: http
+      targetPort: 80
       protocol: TCP
       name: http
   selector:
@@ -23,7 +23,6 @@ metadata:
 spec:
   ports:
     - port: 9000
-      targetPort: fpm
       protocol: TCP
       name: fpm
   selector:
@@ -39,7 +38,7 @@ spec:
   type: {{  .Values.service.type }}
   ports:
     - port: 6001
-      targetPort: websocket
+      targetPort: 6001
       protocol: TCP
       name: websocket
   selector:

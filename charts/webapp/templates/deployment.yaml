@@ -98,12 +98,12 @@ spec:
             initialDelaySeconds: 10
             periodSeconds: 10
             tcpSocket:
-              port: {{ $config.portName }}
+              port: {{ $config.port }}
           livenessProbe:
             initialDelaySeconds: 10
             periodSeconds: 15
             tcpSocket:
-              port: {{ $config.portName }}
+              port: {{ $config.port }}
             timeoutSeconds: 30
           {{ end }}
           {{ if eq $key "web"}}

@@ -162,6 +162,7 @@ securityContext:
 
 service:
   type: ClusterIP
+  port: 80
 
 ingress:
   enabled: false
@@ -175,12 +176,12 @@ ingress:
       name: web
       host: dev.kuhdo.local
       paths: [/]
-      port: http
+      port: 80
     websockets:
       name: websockets
       host: ws.dev.kuhdo.local
       paths: [ / ]
-      port: websocket
+      port: 6001
   tls: []
 
 resources: {}
