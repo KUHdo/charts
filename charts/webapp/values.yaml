@@ -156,8 +156,9 @@ securityContext:
   #readOnlyRootFilesystem: true
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 80
+  targetPort: 80
 
 ingress:
   enabled: false
@@ -216,6 +217,10 @@ mariadb-galera:
     user: homestead
     password: secret
     name: homestead
+  galera:
+    bootstrap:
+      forceSafeToBootstrap: true
+      # bootstrapFromNode: 0
   #existingSecret: kuhdo-webapp-db-root-cred
   ##mariadb-root-password
   ##mariadb-galera-mariabackup-password
