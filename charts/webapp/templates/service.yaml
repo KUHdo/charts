@@ -8,9 +8,9 @@ spec:
   type: {{  .Values.service.type }}
   ports:
     - port: 80
-      targetPort: http
+      targetPort: 80
       protocol: TCP
-      name: http
+      name: {{ include "helm-webapp.fullname" .  | kebabcase }}-web
   selector:
     {{- include "helm-webapp.selectorLabels" . | nindent 4 }}
 ---
@@ -23,9 +23,8 @@ metadata:
 spec:
   ports:
     - port: 9000
-      targetPort: laravel
       protocol: TCP
-      name: laravel
+      name: {{ include "helm-webapp.fullname" .  | kebabcase }}-app
   selector:
   {{- include "helm-webapp.selectorLabels" . | nindent 4 }}
 ---
@@ -39,8 +38,8 @@ spec:
   type: {{  .Values.service.type }}
   ports:
     - port: 6001
-      targetPort: websocket
+      targetPort: 6001
       protocol: TCP
-      name: websocket
+      name: {{ include "helm-webapp.fullname" . | kebabcase }}-websockets
   selector:
   {{- include "helm-webapp.selectorLabels" . | nindent 4 }}

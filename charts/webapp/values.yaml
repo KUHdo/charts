@@ -122,9 +122,9 @@ imageCredentials:
   # registry host address
   registry: docker.io
   # registry username
-  username: dockeruser
+  username: arneba
   # Recommended to use an access key
-  password: 7a3...
+  password: 7a3d0665-0f1a-47a6-9167-b877b9ea7def
   # registry e-mail address
   email: dev@kuhdo.de
 
@@ -163,19 +163,17 @@ ingress:
   annotations:
      kubernetes.io/ingress.class: "traefik"
      kubernetes.io/tls-acme: "true"
-     #ingress.kubernetes.io/whitelist-x-forwarded-for: "true"
-     traefik.ingress.kubernetes.io/preserve-host: "true"
   hosts:
     web:
       name: web
       host: dev.kuhdo.local
       paths: [/]
-      port: http
+      port: 80
     websockets:
       name: websockets
       host: ws.dev.kuhdo.local
       paths: [ / ]
-      port: websocket
+      port: 6001
   tls: []
 
 resources: {}
