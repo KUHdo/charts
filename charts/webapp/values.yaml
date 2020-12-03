@@ -173,7 +173,7 @@ ingress:
       name: web
       host: dev.kuhdo.local
       paths: [/]
-      port: 80
+      port: http
     websockets:
       name: websockets
       host: ws.dev.kuhdo.local
