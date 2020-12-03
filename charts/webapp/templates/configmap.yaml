@@ -35,3 +35,4 @@ data:
   EEX_SFTP_HOST: {{ .Values.dotenv.EEX_SFTP_HOST  | quote}}
   MIX_VUE_APP_I18N_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_LOCALE | quote}}
   MIX_VUE_APP_I18N_FALLBACK_LOCALE: {{ .Values.dotenv.MIX_VUE_APP_I18N_FALLBACK_LOCALE | quote}}
+  TRUST_PROXY: {{ .Values.dotenv.TRUST_PROXY |default "*" | quote}}

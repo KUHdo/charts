@@ -86,6 +86,7 @@ dotenv:
   EEX_SFTP_HOST: "sftp.datasource.eex-group.com"
   MIX_VUE_APP_I18N_LOCALE: "de"
   MIX_VUE_APP_I18N_FALLBACK_LOCALE: "en"
+  TRUST_PROXY: "*"
 
 # Secrets for the laravel app container
 secrets:
@@ -163,6 +164,8 @@ ingress:
   annotations:
      kubernetes.io/ingress.class: "traefik"
      kubernetes.io/tls-acme: "true"
+     ingress.kubernetes.io/whitelist-x-forwarded-for: "true"
+     traefik.ingress.kubernetes.io/preserve-host: "true"
   hosts:
     web:
       name: web
