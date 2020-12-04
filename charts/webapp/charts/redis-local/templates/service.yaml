@@ -7,7 +7,8 @@ metadata:
 spec:
   ports:
     - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.portName }}
       protocol: TCP
-      name: {{ .Chart.Name }}
+      name: {{ .Values.service.portName }}
   selector:
     {{- include "redis.selectorLabels" . | nindent 4 }}
