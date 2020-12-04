@@ -9,6 +9,7 @@ data:
   APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   APP_NAME: {{ .Values.dotenv.APP_NAME  | default "KUHdo Gmbh" | quote}}
   APP_URL: {{ .Values.dotenv.APP_URL | default "https://portal.kuhdo.de" | quote }}
+  LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER | default "redis"  | quote }}
   CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER  | default "redis" | quote }}
   QUEUE_DRIVER: {{ .Values.dotenv.QUEUE_DRIVER  | default "redis" | quote }}

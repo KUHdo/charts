@@ -118,16 +118,16 @@ secrets:
     MARIADB_GALERA_MARIABACKUP_PASSWORD: backmeup
   redis:
     # if empty it gets generated
-    password: testing
+    password:
 
 # docker registry credentials to be created regcred
 imageCredentials:
   # registry host address
   registry: docker.io
   # registry username
-  username: arneba
+  username: dockerhubuser
   # Recommended to use an access key
-  password: 7a3d0665-0f1a-47a6-9167-b877b9ea7def
+  password: 7a..
   # registry e-mail address
   email: dev@kuhdo.de
 
