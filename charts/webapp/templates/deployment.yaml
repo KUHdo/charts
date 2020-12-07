@@ -36,17 +36,17 @@ spec:
           command:
             - /bin/sh
             - -c
-            - php artisan migrate --force;
+            #- php artisan migrate --force;
+            - php artisan config:cache ;
             - php artisan route:cache ;
             - php artisan view:clear ;
-            - php artisan db:seed --force --class RolesPermissions ;
-            - php artisan kuhdo:courses:current ;
+            #- php artisan db:seed --force --class RolesPermissions ;
             - php artisan horizon:terminate ;
+            - php artisan kuhdo:courses:current ;
             {{ if .Values.tags.dynamic}}
-            - php artisan db:wipe ;
-            - php artisan migrate --seed --env=local ;
-            - php artisan storage:link ;
-          {{ end }}
+            #- php artisan db:wipe ;
+            #- php artisan migrate --seed --env=local ;
+            {{ end }}
           env:
             {{- range $key, $value := .Values.secrets.webapp }}
             - name: {{ $key }}
@@ -213,6 +213,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: SLACK_WEBHOOK_URL
+            - name: PUSHER_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
+                  key: PUSHER_APP_SECRET
             {{ if eq (include "prodstaging" $) "true" }}
             - name: REDIS_PASSWORD
               valueFrom:
