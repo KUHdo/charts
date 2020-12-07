@@ -213,6 +213,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: SLACK_WEBHOOK_URL
+            - name: PUSHER_APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
+                  key: PUSHER_APP_SECRET
             {{ if eq (include "prodstaging" $) "true" }}
             - name: REDIS_PASSWORD
               valueFrom:

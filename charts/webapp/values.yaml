@@ -89,6 +89,11 @@ dotenv:
   MIX_VUE_APP_I18N_LOCALE: "de"
   MIX_VUE_APP_I18N_FALLBACK_LOCALE: "en"
   TRUST_PROXY: "*"
+  PUSHER_ENDPOINT_SCHEME: "https"
+  PUSHER_APP_ID:
+  PUSHER_APP_KEY:
+  PUSHER_FORCE_TLS: "true"
+  ECHO_ENCRYPTED: "true"
 
 # Secrets for the laravel app container
 secrets:
@@ -96,7 +101,7 @@ secrets:
     # APP_KEY should be filled for environments staging and production
     # in a dynamic environment the APP_KEY should be empty to be generated
     # via template: {{ include laravel.APP_KEY }}
-    APP_KEY: base64:sh8FW+fW3s62e8gg1LVwojlNP0wruH54/WAhsFnye3U=
+    APP_KEY:
     EEX_SFTP_PASSWORD: supersecret
     EEX_SFTP_REMOTE_PATH: /F:/EEX_Production/master/market_data/agricultural
     EEX_SFTP_USERNAME: EEX_6..
@@ -110,6 +115,7 @@ secrets:
     STRIPE_SECRET: supersecret
     STRIPE_TAX_RATE: txr_1EPpn...
     STRIPE_USER_PLAN: plan_DNd...1
+    PUSHER_APP_SECRET:
   database:
     MYSQL_DATABASE: homestead
     MYSQL_USER: homestead
