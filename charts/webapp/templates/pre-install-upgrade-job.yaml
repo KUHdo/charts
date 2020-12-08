@@ -23,8 +23,8 @@ spec:
             - /bin/sh
             - -c
             {{ if .Values.tags.dynamic}}
-            - php artisan db:wipe ;
-            - php artisan migrate --seed --env=local ;
+            - php artisan db:wipe --force;
+            - php artisan migrate --seed --env=local --force;
             {{- else }}
             - php artisan migrate --force;
             - php artisan db:seed --force --class RolesPermissions ;
