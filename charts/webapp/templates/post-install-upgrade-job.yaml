@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: {{ include "helm-webapp.fullname" . }}
   annotations:
-    "helm.sh/hook": pre-install,pre-upgrade
+    "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-1"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
@@ -30,6 +30,11 @@ spec:
             - php artisan db:seed --force --class RolesPermissions ;
             {{ end }}
           env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "helm-webapp.fullname" $ }}-config
+                  key: DB_HOST
             {{- range $key, $value := .Values.secrets.webapp }}
             - name: {{ $key }}
               value: {{ $value }}
