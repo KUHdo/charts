@@ -46,4 +46,7 @@ spec:
             {{ if eq (include "prodstaging" .) "true" -}}
             - name: REDIS_PASSWORD
               value: {{ .Values.secrets.redis.password}}
-          {{ end }}
+            {{ end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "helm-webapp.fullname" $ }}-config
