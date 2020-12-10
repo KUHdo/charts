@@ -29,57 +29,6 @@ spec:
       imagePullSecrets:
         - name: regcred
       restartPolicy: Always
-      initContainers:
-        - image: "{{ .Values.containers.app.repository}}:{{ .Values.containers.app.tag | default .Chart.AppVersion }}"
-          name: artisan
-          imagePullPolicy: Always
-          command:
-            - /bin/sh
-            - -c
-            #- php artisan migrate --force;
-            - php artisan config:cache ;
-            - php artisan route:cache ;
-            - php artisan view:clear ;
-            #- php artisan db:seed --force --class RolesPermissions ;
-            - php artisan horizon:terminate ;
-            - php artisan kuhdo:courses:current ;
-            {{ if .Values.tags.dynamic}}
-            #- php artisan db:wipe ;
-            #- php artisan migrate --seed --env=local ;
-            {{ end }}
-          env:
-            {{- range $key, $value := .Values.secrets.webapp }}
-            - name: {{ $key }}
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: {{ $key }}
-            {{ end -}}
-            - name: DB_DATABASE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
-                  key: MYSQL_DATABASE
-            - name: DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
-                  key: MYSQL_PASSWORD
-            - name: DB_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
-                  key: MYSQL_USER
-            {{ if eq (include "prodstaging" .) "true" -}}
-            - name: REDIS_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-redis
-                  key: redis-password
-            {{ end }}
-          envFrom:
-            - configMapRef:
-                name: {{ include "helm-webapp.fullname" . }}-config
       securityContext:
       {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
