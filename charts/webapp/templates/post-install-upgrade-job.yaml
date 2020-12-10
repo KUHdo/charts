@@ -20,14 +20,11 @@ spec:
         - name: db-migrations-seeds
           image: "{{ .Values.containers.app.repository}}:{{ .Values.containers.app.tag | default .Chart.AppVersion }}"
           command:
-            - /bin/sh
-            - -c
+            - /bin/sh -c
             {{ if .Values.tags.dynamic}}
-            - php artisan db:wipe --force
-            - php artisan migrate --seed --env=local --force
+            - php artisan db:wipe --force && php artisan migrate --seed --env=local --force
             {{- else }}
-            - php artisan migrate --force
-            - php artisan db:seed --force --class RolesPermissions
+            - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
             {{ end }}
           env:
             - name: DB_HOST
