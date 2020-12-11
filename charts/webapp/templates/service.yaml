@@ -39,7 +39,7 @@ spec:
   type: {{  .Values.service.type }}
   ports:
     - port: 6001
-      targetPort: websocket
+      targetPort: 6001
       protocol: TCP
       name: websocket
   selector:
