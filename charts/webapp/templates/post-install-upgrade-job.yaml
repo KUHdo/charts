@@ -38,7 +38,7 @@ spec:
               value: {{ $value }}
             {{ end -}}
             - name: APP_KEY
-              value: {{ include "laravel.app_key" }}
+              value: {{ include "laravel.app_key" . }}
             - name: DB_DATABASE
               value: {{ .Values.secrets.database.MYSQL_DATABASE}}
             - name: DB_PASSWORD
