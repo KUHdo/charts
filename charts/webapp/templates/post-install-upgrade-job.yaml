@@ -28,19 +28,19 @@ spec:
             - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
             {{ end }}
           env:
-            { { - range $key, $value := .Values.secrets.webapp } }
-            - name: { { $key } }
-              value: { { $value } }
-            { { end - } }
             - name: DB_HOST
               valueFrom:
                 configMapKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-config
                   key: DB_HOST
+            {{- range $key, $value := .Values.secrets.webapp }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{ end -}}
             - name: APP_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
+                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
                   key: APP_KEY
             - name: DB_DATABASE
               value: {{ .Values.secrets.database.MYSQL_DATABASE}}
