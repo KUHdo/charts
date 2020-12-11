@@ -33,6 +33,11 @@ spec:
                 configMapKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-config
                   key: DB_HOST
+            - name: APP_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
+                  key: APP_KEY
             {{- range $key, $value := .Values.secrets.webapp }}
             - name: {{ $key }}
               value: {{ $value }}
