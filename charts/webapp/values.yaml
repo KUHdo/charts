@@ -52,6 +52,8 @@ containers:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     tag: "1.4.2"
+    port: 6001
+    portName: websocket
     args: "websockets"
 
 # Configmap for laravel app container
@@ -183,8 +185,8 @@ ingress:
     websockets:
       name: websockets
       host: ws.dev.kuhdo.local
-      paths: [ / ]
-      port: 6001
+      paths: [/]
+      port: websocket
   tls: []
 
 resources: {}

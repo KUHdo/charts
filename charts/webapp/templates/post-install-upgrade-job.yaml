@@ -5,7 +5,7 @@ metadata:
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-1"
-    # "helm.sh/hook-delete-policy": hook-succeeded
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     metadata:
@@ -37,6 +37,8 @@ spec:
             - name: {{ $key }}
               value: {{ $value }}
             {{ end -}}
+            - name: APP_KEY
+              value: {{ include "laravel.app_key" . }}
             - name: DB_DATABASE
               value: {{ .Values.secrets.database.MYSQL_DATABASE}}
             - name: DB_PASSWORD
@@ -46,4 +48,7 @@ spec:
             {{ if eq (include "prodstaging" .) "true" -}}
             - name: REDIS_PASSWORD
               value: {{ .Values.secrets.redis.password}}
-          {{ end }}
+            {{ end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "helm-webapp.fullname" $ }}-config
