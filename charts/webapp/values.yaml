@@ -224,6 +224,7 @@ mariadb-galera:
   fullnameOverride: database
   service:
     type: ClusterIP
+  # For testing purposes
   rootUser:
     user: root
     password: password
