@@ -225,9 +225,9 @@ mariadb-galera:
   service:
     type: ClusterIP
   # For testing purposes
-  rootUser:
-    user: root
-    password: password
+  # rootUser:
+  #   user: root
+  #   password: password
   db:
     user: homestead
     password: secret
