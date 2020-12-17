@@ -33,7 +33,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.existingSecretName }}-db-root-cred
-                  key: MYSQL_ROOT_PASSWORD
+                  key: mariadb-root-password
             - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
