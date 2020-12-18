@@ -123,8 +123,6 @@ secrets:
     MYSQL_USER: homestead
     MYSQL_PASSWORD: secret
     MYSQL_ROOT_PASSWORD: supersecret
-    MARIADB_ROOT_PASSWORD: supersecret
-    MARIADB_PASSWORD: secret
     MARIADB_GALERA_MARIABACKUP_PASSWORD: backmeup
   redis:
     # if empty it gets generated
@@ -233,7 +231,7 @@ mariadb-galera:
   galera:
     bootstrap:
       forceSafeToBootstrap: true
-  existingSecret: kuhdo-webapp-db-root-cred
+  existingSecret: kuhdo-webapp-mariadb-galera-creds
 
 redis:
   nameOverride: redis

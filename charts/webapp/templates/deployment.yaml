@@ -85,17 +85,17 @@ spec:
             - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_DATABASE
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_PASSWORD
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-db-user-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_USER
             - name: MAIL_PASSWORD
               valueFrom:

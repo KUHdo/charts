@@ -32,22 +32,22 @@ spec:
             - name: MYSQL_ROOT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.existingSecretName }}-db-root-cred
-                  key: mariadb-root-password
+                  name: {{ .Values.existingSecretName }}-db-creds
+                  key: MYSQL_ROOT_PASSWORD
             - name: MYSQL_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.existingSecretName }}-db-user-creds
+                  name: {{ .Values.existingSecretName }}-db-creds
                   key: MYSQL_DATABASE
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.existingSecretName }}-db-user-creds
+                  name: {{ .Values.existingSecretName }}-db-creds
                   key: MYSQL_USER
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.existingSecretName }}-db-user-creds
+                  name: {{ .Values.existingSecretName }}-db-creds
                   key: MYSQL_PASSWORD
           volumeMounts:
             - name: {{ include "database.fullname" . }}-storage
