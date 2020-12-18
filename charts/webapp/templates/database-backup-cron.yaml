@@ -34,8 +34,11 @@ spec:
                   mountPath: app
               command: [ "/bin/sh","-c" ]
               args: [ "mysqldump -h $(DB_HOST) -u root -p$(ROOT_PASSWORD) -A > backup.sql" ]
+          securityContext:
+            runAsUser: 1001
+            fsGroup: 1001
           volumes:
             - name: {{ include "helm-webapp.fullname" . }}-backup-storage
               persistentVolumeClaim:
                 claimName: {{ include "helm-webapp.fullname" . }}-mariadb-backup
-          restartPolicy: OnFailure
+          restartPolicy: Never
