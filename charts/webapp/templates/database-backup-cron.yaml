@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: {{ include "helm-webapp.fullname" . }}-mysqldump
   labels:
-    {{- include "helm-webapp.labels" . | nindent 4 }}
+  {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
   schedule: "*/3 * * * *"
   jobTemplate:
