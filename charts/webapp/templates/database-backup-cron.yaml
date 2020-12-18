@@ -18,15 +18,15 @@ spec:
                   name: {{ include "helm-webapp.fullname" . }}-db-creds
                   key: MYSQL_ROOT_PASSWORD
             - name: DB_HOST
-                valueFrom:
-                  configMapKeyRef:
-                    name: {{ include "helm-webapp.fullname" $ }}-config
-                    key: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "helm-webapp.fullname" . }}-config
+                  key: DB_HOST
             - name: DB_PORT
-                valueFrom:
-                  configMapKeyRef:
-                    name: {{ include "helm-webapp.fullname" $ }}-config
-                    key: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "helm-webapp.fullname" . }}-config
+                  key: DB_PORT
           volumeMounts:
             - name: {{ include "helm-webapp.fullname" $ }}-backup-storage
               mountPath: app
