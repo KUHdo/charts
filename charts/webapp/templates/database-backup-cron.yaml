@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: CronJob
+metadata:
+  name: {{ include "helm-webapp.fullname" . }}-mysqldump
+  labels:
+    {{ - include "helm-webapp.labels" . | nindent 4 }}
+spec:
+  schedule: "*/1 * * * *"
+  jobTemplate:
+    spec:
+      containers:
+        - name: {{ include "helm-webapp.fullname" . }}-mysqldump
+          image: bitnami/mariadb-galera:latest
+          env:
+            - name: ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "helm-webapp.fullname" . }}-db-creds
+                  key: MYSQL_ROOT_PASSWORD
+            - name: DB_HOST
+                valueFrom:
+                  configMapKeyRef:
+                    name: {{ include "helm-webapp.fullname" $ }}-config
+                    key: DB_HOST
+            - name: DB_PORT
+                valueFrom:
+                  configMapKeyRef:
+                    name: { { include "helm-webapp.fullname" $ } }-config
+                    key: DB_PORT
+          volumeMounts:
+            - name: { { include "helm-webapp.fullname" $ } }-backup-storage
+              mountPath: app
+          command: [ "/bin/sh","-c" ]
+          args: [ "mysqldump -h $(DB_HOST) -u root -p$(ROOT_PASSWORD) -A > backup.sql" ]
+      volumes:
+        - name: {{ include "helm-webapp.fullname" . }}-backup-storage
+          persistentVolumeClaim:
+            claimName: {{ include "helm-webapp.fullname" . }}-mariadb-backup
