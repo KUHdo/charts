@@ -5,7 +5,7 @@ metadata:
   labels:
     {{ - include "helm-webapp.labels" . | nindent 4 }}
 spec:
-  schedule: "*/1 * * * *"
+  schedule: "*/3 * * * *"
   jobTemplate:
     spec:
       containers:
