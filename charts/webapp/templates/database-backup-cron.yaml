@@ -38,3 +38,4 @@ spec:
             - name: {{ include "helm-webapp.fullname" . }}-backup-storage
               persistentVolumeClaim:
                 claimName: {{ include "helm-webapp.fullname" . }}-mariadb-backup
+          restartPolicy: OnFailure
