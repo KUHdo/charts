@@ -31,12 +31,12 @@ spec:
                       key: DB_PORT
               volumeMounts:
                 - name: {{ include "helm-webapp.fullname" $ }}-backup-storage
-                  mountPath: app
+                  mountPath: /bitnami/app
               command: [ "/bin/sh","-c" ]
-              args: [ "mysqldump -h $(DB_HOST) -u root -p$(ROOT_PASSWORD) -A > backup.sql" ]
+              args: [ "mysqldump -h $(DB_HOST) -u root -p$(ROOT_PASSWORD) -A > /bitnami/app/backup.sql" ]
           securityContext:
-            runAsUser: 1001
-            fsGroup: 1001
+            runAsUser: 0
+            fsGroup: 0
           volumes:
             - name: {{ include "helm-webapp.fullname" . }}-backup-storage
               persistentVolumeClaim:
