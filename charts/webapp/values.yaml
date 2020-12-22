@@ -224,22 +224,15 @@ mariadb-galera:
   fullnameOverride: database
   service:
     type: ClusterIP
-  # For testing purposes
-  rootUser:
-    user: root
-    password: password
   db:
     user: homestead
-    password: secret
+    # password: secret
     name: homestead
   galera:
     bootstrap:
       forceSafeToBootstrap: true
-      bootstrapFromNode: 0
-  #existingSecret: kuhdo-webapp-db-root-cred
-  ##mariadb-root-password
-  ##mariadb-galera-mariabackup-password
-  ##mariadb-password
+  existingSecret: kuhdo-webapp-mariadb-galera-creds
+
 redis:
   nameOverride: redis
   fullnameOverride: redis
@@ -247,7 +240,7 @@ redis:
     annotations: { }
   serviceType: ClusterIP
   password: testing
-  #existingSecret: kuhdo-webapp-redis
+  # existingSecret: kuhdo-webapp-redis
   securityContext:
     enabled: false
   ## Cluster settings
