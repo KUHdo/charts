@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
-  schedule: "*/3 * * * *"
+  schedule: "*/30 * * * *"
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 0
   jobTemplate:
@@ -31,14 +31,18 @@ spec:
                     configMapKeyRef:
                       name: {{ include "helm-webapp.fullname" . }}-config
                       key: DB_PORT
+                - name: FILESTOKEEP
+                  value: 48
+                - name: BACKUP_DIR
+                  value: '/bitnami/app'
               volumeMounts:
                 - name: {{ include "helm-webapp.fullname" $ }}-backup-storage
                   mountPath: /bitnami/app
               command: [ "/bin/sh","-c" ]
-              args: [ "mysqldump -h $(DB_HOST) -u root -p$(ROOT_PASSWORD) -A > /bitnami/app/backup.sql" ]
+              args: [ 'mkdir -p $(BACKUP_DIR); cd $(BACKUP_DIR); mysqldump -h $(DB_HOST) -u root -p$(ROOT_PASSWORD) -A --single-transaction --routines --triggers > $(BACKUP_DIR)/$(date +"%m-%d-%Y")_$(date +"%T").sql; ls -t1 | tail -n +$(($FILESTOKEEP+1)) | xargs rm -f' ]
           securityContext:
-            runAsUser: 0
-            fsGroup: 0
+            runAsUser: 1001
+            fsGroup: 1001
           volumes:
             - name: {{ include "helm-webapp.fullname" . }}-backup-storage
               persistentVolumeClaim:
