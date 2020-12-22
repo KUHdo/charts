@@ -6,6 +6,8 @@ metadata:
     {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
   schedule: "*/3 * * * *"
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 0
   jobTemplate:
     spec:
       template:
@@ -41,4 +43,4 @@ spec:
             - name: {{ include "helm-webapp.fullname" . }}-backup-storage
               persistentVolumeClaim:
                 claimName: {{ include "helm-webapp.fullname" . }}-mariadb-backup
-          restartPolicy: Never
+          restartPolicy: OnFailure
