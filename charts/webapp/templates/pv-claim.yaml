@@ -26,7 +26,7 @@ metadata:
     {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
