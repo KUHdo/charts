@@ -24,7 +24,8 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
       labels:
-    {{- include "helm-webapp.selectorLabels" . | nindent 8 }}
+        {{- include "helm-webapp.selectorLabels" . | nindent 8 }}
+        date: "{{ now | unixEpoch }}"
     spec:
       imagePullSecrets:
         - name: regcred
