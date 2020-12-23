@@ -23,7 +23,7 @@ spec:
             - /bin/sh
             - -c
             {{ if .Values.tags.dynamic}}
-            - php artisan db:wipe --force && php artisan migrate --seed --env=local --force
+            - php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod && php artisan cache:clear
             {{- else }}
             - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
             {{ end }}
