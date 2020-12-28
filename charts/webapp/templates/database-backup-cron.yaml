@@ -5,7 +5,11 @@ metadata:
   labels:
     {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
+  {{ if eq (include "prodstaging" .) "true" }}
   schedule: "*/30 * * * *"
+  {{ - else }}
+  schedule: "0 0 29 2 1"
+  {{ end }}
   successfulJobsHistoryLimit: 0
   failedJobsHistoryLimit: 0
   jobTemplate:
