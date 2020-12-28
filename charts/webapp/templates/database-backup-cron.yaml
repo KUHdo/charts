@@ -7,7 +7,7 @@ metadata:
 spec:
   {{ if eq (include "prodstaging" .) "true" }}
   schedule: "*/30 * * * *"
-  {{ - else }}
+  {{ else }}
   schedule: "0 0 29 2 1"
   {{ end }}
   successfulJobsHistoryLimit: 0
