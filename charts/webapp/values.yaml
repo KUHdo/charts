@@ -191,6 +191,7 @@ ingressRouteTCP:
     websocket:
       name: websocket
       host: ws.dev.kuhdo.local
+      port: 6001
   tls: []
 
 resources: {}
