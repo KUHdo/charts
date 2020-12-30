@@ -6,17 +6,13 @@ metadata:
 spec:
   entryPoints:
     - websocket
+  {{ if .Values.ingressRouteTCP.tls }}
+  tls:
+    {{ range .Values.ingressRouteTCP.tls }}
+      {{ end }}
+  {{ end }}
   routes:
     - match: HostSNI(`web-1222.pr.kuhdo.dev`)
       services:
         - name: kuhdo-webapp-websockets
           port: 6001
-  { { - if .Values.ingressRouteTCP.tls } }
-  tls:
-    { { - range .Values.ingressRouteTCP.tls } }
-    - hosts:
-        { { - range .hosts } }
-        - { { . | quote } }
-        { { - end } }
-    { { - end } }
-  { { - end } }
