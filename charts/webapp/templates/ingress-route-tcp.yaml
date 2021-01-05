@@ -1,18 +1,28 @@
+{{- $fullName := include "helm-webapp.fullname" . -}}
+{{- if .Values.ingress.enabled -}}
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
 metadata:
-  name: web-1222-ingress-route-tcp
-  namespace: kuhdo-web-1222
+  name: {{ $fullName }}
+  labels:
+    {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
   entryPoints:
-    - websocket
-  {{ if .Values.ingressRouteTCP.tls }}
+    {{- range .Values.ingressRouteTCP.entryPoints }}
+    - {{ . | quote }}
+    {{- end }}
+  {{- if .Values.ingressRouteTCP.tls }}
   tls:
-    {{ range .Values.ingressRouteTCP.tls }}
-      {{ end }}
-  {{ end }}
+    {{- range .Values.ingressRouteTCP.tls }}
+    {{- end }}
+  {{- end }}
   routes:
-    - match: HostSNI(`web-1222.pr.kuhdo.dev`)
+    {{- range .Values.ingressRouteTCP.hosts }}
+    - match: HostSNI(`{{ .host }}`)
+      {{- $name := .name }}
+      {{- $port := .port }}
       services:
-        - name: kuhdo-webapp-websockets
-          port: 6001
+        - name: {{ $fullName }}-{{ $name }}
+          port: {{ $port }}
+    {{- end }}
+{{- end }}

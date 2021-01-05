@@ -187,6 +187,9 @@ ingress:
   tls: []
 
 ingressRouteTCP:
+  enabled: false
+  entryPoints:
+    - websocket
   hosts:
     websocket:
       name: websocket
