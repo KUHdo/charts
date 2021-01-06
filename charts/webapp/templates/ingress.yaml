@@ -1,5 +1,5 @@
-{{- if .Values.ingress.enabled -}}
-{{- $fullName := include "helm-webapp.fullname" . -}}
+{{- if .Values.ingress.enabled }}
+{{- $fullName := include "helm-webapp.fullname" . }}
 {{- $apiVersion := include "networkPolicy.apiVersion" . }}
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: Ingress
@@ -46,23 +46,23 @@ spec:
     {{- end }}
   {{- end }}
 ---
-{{- if .Values.ingress.enabled -}}
-  {{- $fullName := include "helm-webapp.fullname" . -}}
-  {{- if .Values.ingress.tls }}
-    {{- range .Values.ingress.tls }}
-    apiVersion: cert-manager.io/v1
-    kind: Certificate
-    metadata:
-      name: {{ $fullName }}
-    spec:
-      secretName: {{ $fullName }}-cert
-      dnsNames:
-        {{- range .hosts }}
-        - {{ . | quote }}
-        {{- end }}
-      issuerRef:
-        name: letsencrypt-staging # TODO: depends on staging/production or dynamic; production: letsencrypt-production
-        kind: ClusterIssuer
+{{- if .Values.ingress.enabled }}
+{{- $fullName := include "helm-webapp.fullname" . }}
+{{- if .Values.ingress.tls }}
+{{- range .Values.ingress.tls }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ $fullName }}
+spec:
+  secretName: {{ $fullName }}-cert
+  dnsNames:
+    {{- range .hosts }}
+    - {{ . | quote }}
     {{- end }}
-  {{- end }}
+  issuerRef:
+    name: letsencrypt-staging # TODO: depends on staging/production or dynamic; production: letsencrypt-production
+    kind: ClusterIssuer
+{{- end }}
+{{- end }}
 {{- end }}
