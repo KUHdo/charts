@@ -1,5 +1,5 @@
-{{- if .Values.ingress.enabled -}}
-{{- $fullName := include "helm-webapp.fullname" . -}}
+{{- if .Values.ingress.enabled }}
+{{- $fullName := include "helm-webapp.fullname" . }}
 {{- $apiVersion := include "networkPolicy.apiVersion" . }}
 apiVersion: {{ template "networkPolicy.apiVersion" . }}
 kind: Ingress

@@ -1,0 +1,21 @@
+{{- if .Values.ingress.enabled }}
+{{- $fullName := include "helm-webapp.fullname" . }}
+{{- $issuer := ternary "letsencrypt-production" "letsencrypt-staging" (eq (include "prodstaging" .) "true") }}
+{{- if .Values.ingress.tls }}
+{{- range .Values.ingress.tls }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ $fullName }}
+spec:
+  secretName: {{ .secretName }}
+  dnsNames:
+    {{- range .hosts }}
+    - {{ . | quote }}
+    {{- end }}
+  issuerRef:
+    name: {{ $issuer }}
+    kind: ClusterIssuer
+{{- end }}
+{{- end }}
+{{- end }}
