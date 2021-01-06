@@ -63,8 +63,6 @@ ingress:
     kubernetes.io/router.tls: "true"
   hosts:
     - host: vuedo.kuhdo.local
-      paths:
-      - "/"
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
