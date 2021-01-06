@@ -58,17 +58,12 @@ service:
 ingress:
   enabled: false
   annotations:
-     kubernetes.io/ingress.class: "traefik"
-     kubernetes.io/tls-acme: "true"
-     traefik.ingress.kubernetes.io/affinity: "true"
-     kubernetes.io/router.entrypoints: "websecure"
-     kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
   hosts:
-    web:
-      name: web
-      host: vuedo.kuhdo.local
-      paths: [/]
-      port: http
+  - host: vuedo.kuhdo.local
+    paths:
+    - "/"
+
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
