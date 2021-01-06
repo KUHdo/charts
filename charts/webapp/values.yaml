@@ -185,6 +185,9 @@ ingress:
       paths: [/]
       port: http
   tls: []
+  # - hosts:
+  #     - example.com
+  #   secretName: example-cert
 
 ingressRouteTCP:
   enabled: false
