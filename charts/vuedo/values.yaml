@@ -6,9 +6,9 @@ replicaCount: 1
 
 image:
   repository: kuhdo/vuedo
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "0.1.0"
 
 
 # docker registry credentials to be created regcred
@@ -58,7 +58,9 @@ service:
 ingress:
   enabled: false
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+     kubernetes.io/ingress.class: "traefik-cert-manager"
+     kubernetes.io/router.entrypoints: "websecure"
+     kubernetes.io/router.tls: "true"
   hosts:
   - host: vuedo.kuhdo.local
     paths:
