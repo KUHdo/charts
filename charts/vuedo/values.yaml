@@ -63,10 +63,10 @@ ingress:
     kubernetes.io/router.tls: "true"
   hosts:
     - host: vuedo.kuhdo.local
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+  tls:
+    - secretName: vuedo-cert
+      hosts:
+        - vuedo.kuhdo.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
