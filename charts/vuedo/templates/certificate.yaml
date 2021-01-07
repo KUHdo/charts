@@ -1,6 +1,6 @@
 {{- if .Values.ingress.enabled }}
 {{- $fullName := include "vuedo.name" . }}
-{{- $issuer := ternary "letsencrypt-production" "letsencrypt-staging" (eq (include "prodstaging" .) "true") }}
+{{- $issuer := ternary "letsencrypt-production" "letsencrypt-staging" "true") }}
 {{- if .Values.ingress.tls }}
 {{- range .Values.ingress.tls }}
 apiVersion: cert-manager.io/v1
