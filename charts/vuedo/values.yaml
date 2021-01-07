@@ -57,6 +57,7 @@ service:
 
 ingress:
   enabled: false
+  issuer: "letsencrypt-production"
   annotations:
     kubernetes.io/ingress.class: "traefik-cert-manager"
     kubernetes.io/router.entrypoints: "websecure"
