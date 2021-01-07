@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled }}
-{{- $fullName := include "helm-vuedo.fullname" . }}
+{{- $fullName := include "vuedo.name" . }}
 {{- $issuer := ternary "letsencrypt-production" "letsencrypt-staging" (eq (include "prodstaging" .) "true") }}
 {{- if .Values.ingress.tls }}
 {{- range .Values.ingress.tls }}
