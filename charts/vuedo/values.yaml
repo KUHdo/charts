@@ -6,9 +6,9 @@ replicaCount: 1
 
 image:
   repository: kuhdo/vuedo
-  pullPolicy: Always
+  pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "latest"
+  tag: "0.1.0"
 
 
 # docker registry credentials to be created regcred
@@ -57,22 +57,17 @@ service:
 
 ingress:
   enabled: false
+  issuer: "letsencrypt-production"
   annotations:
-     kubernetes.io/ingress.class: "traefik"
-     kubernetes.io/tls-acme: "true"
-     traefik.ingress.kubernetes.io/affinity: "true"
-     kubernetes.io/router.entrypoints: "websecure"
-     kubernetes.io/router.tls: "true"
+    kubernetes.io/ingress.class: "traefik-cert-manager"
+    kubernetes.io/router.entrypoints: "websecure"
+    kubernetes.io/router.tls: "true"
   hosts:
-    web:
-      name: web
-      host: vuedo.kuhdo.local
-      paths: [/]
-      port: http
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
+    - host: vuedo.kuhdo.local
+  tls:
+    - secretName: vuedo-cert
+      hosts:
+        - vuedo.kuhdo.local
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
