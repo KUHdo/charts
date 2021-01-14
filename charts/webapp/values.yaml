@@ -245,8 +245,8 @@ redis:
   service:
     annotations: { }
   serviceType: ClusterIP
-  password: testing
-  # existingSecret: kuhdo-webapp-redis
+  # password: testing
+  existingSecret: kuhdo-webapp-redis
   securityContext:
     enabled: false
   ## Cluster settings
