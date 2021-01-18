@@ -62,6 +62,8 @@ ingress:
     kubernetes.io/ingress.class: "traefik-cert-manager"
     kubernetes.io/router.entrypoints: "websecure"
     kubernetes.io/router.tls: "true"
+    ingress.kubernetes.io/auth-type: "basic"
+    ingress.kubernetes.io/auth-type: "auth-secret"
   hosts:
     - host: vuedo.kuhdo.local
   tls:
