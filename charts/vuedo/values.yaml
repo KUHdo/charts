@@ -63,7 +63,7 @@ ingress:
     kubernetes.io/router.entrypoints: "websecure"
     kubernetes.io/router.tls: "true"
     ingress.kubernetes.io/auth-type: "basic"
-    ingress.kubernetes.io/auth-type: "auth-secret"
+    ingress.kubernetes.io/auth-secret: "auth-secret"
   hosts:
     - host: vuedo.kuhdo.local
   tls:
