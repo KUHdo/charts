@@ -64,7 +64,7 @@ spec:
               value: "9000"
           volumeMounts:
             - name: {{ include "helm-webapp.fullname" $ }}-storage
-              mountPath: storage
+              mountPath: src/storage/app/
           {{ end }}
           resources: { }
           {{ if ne $key "web" }}
