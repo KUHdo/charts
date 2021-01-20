@@ -27,6 +27,7 @@ spec:
             {{- else }}
             - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
             {{ end }}
+            - php artisan storage:link -q
             - php artisan clear-compiled
             - php artisan view:clear
             - php artisan optimize
