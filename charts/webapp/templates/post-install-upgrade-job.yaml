@@ -24,9 +24,9 @@ spec:
             - /bin/sh
             - -c
             {{ if .Values.tags.dynamic}}
-            - php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod && php artisan cache:clear && php artisan storage:link && php artisan clear-compiled && php artisan view:clear && php artisan optimize
+            - php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod && php artisan cache:clear && php artisan clear-compiled && php artisan view:clear && php artisan optimize
             {{- else }}
-            - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions && php artisan clear-compiled && php artisan view:clear && php artisan optimize && php artisan storage:link && install -g 1000 -o 1000 -m 0755 -d /src/storage/app/public && ls -ls /src/public/storage && ls -ls /src
+            - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions && php artisan clear-compiled && php artisan view:clear && php artisan optimize
             {{ end }}
           env:
             - name: DB_HOST
