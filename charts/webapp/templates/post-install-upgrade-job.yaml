@@ -24,14 +24,10 @@ spec:
             - /bin/sh
             - -c
             {{ if .Values.tags.dynamic}}
-            - php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod && php artisan cache:clear
+            - php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod && php artisan cache:clear && php artisan storage:link && php artisan clear-compiled && php artisan view:clear && php artisan optimize
             {{- else }}
-            - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
+            - php artisan migrate --force && php artisan db:seed --force --class RolesPermissions && php artisan storage:link && php artisan clear-compiled && php artisan view:clear && php artisan optimize
             {{ end }}
-            - php artisan storage:link
-            - php artisan clear-compiled
-            - php artisan view:clear
-            - php artisan optimize
           env:
             - name: DB_HOST
               valueFrom:
