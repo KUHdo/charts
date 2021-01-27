@@ -21,40 +21,42 @@ fullnameOverride: "kuhdo-webapp"
 # pod container configuration
 containers:
   # name of the container
-  web:
-    # image and version of the container
-    repository: kuhdo/web
-    pullPolicy: Always
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: "latest"
-    # live- and readiness probe is only set  if
-    # the container has a port list entry
-    port: 80
-    portName: http
   app:
-    repository: kuhdo/app
-    pullPolicy: Always
-    tag: "1.4.2"
-    port: 9000
-    portName: fpm
-    args: "prod"
+    web:
+      # image and version of the container
+      repository: kuhdo/web
+      pullPolicy: Always
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: "latest"
+      # live- and readiness probe is only set  if
+      # the container has a port list entry
+      port: 80
+      portName: http
+    app:
+      repository: kuhdo/app
+      pullPolicy: Always
+      tag: "1.4.2"
+      port: 9000
+      portName: fpm
+      args: "prod"
+    websockets:
+      repository: kuhdo/app
+      pullPolicy: IfNotPresent
+      tag: "1.4.2"
+      port: 6001
+      portName: websocket
+      args: "websockets"
   queue:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     tag: "1.4.2"
     args: "queue"
-  scheduler:
+  cron:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     tag: "1.4.2"
     args: "scheduler"
-  websockets:
-    repository: kuhdo/app
-    pullPolicy: IfNotPresent
-    tag: "1.4.2"
-    port: 6001
-    portName: websocket
-    args: "websockets"
+
 
 # Configmap for laravel app container
 dotenv:
