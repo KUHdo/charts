@@ -319,17 +319,16 @@ spec:
                 secretKeyRef:
                   name: { { include "helm-webapp.fullname" $ } }-env-secrets
                   key: PUSHER_APP_SECRET
-            { { if eq (include "prodstaging" $) "true" } }
+            {{ if eq (include "prodstaging" $) "true" }}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: { { include "helm-webapp.fullname" $ } }-redis
                   key: redis-password
-            { { end } }
+            {{ end }}
           envFrom:
             - configMapRef:
                 name: { { include "helm-webapp.fullname" $ } }-config
-          {{- end }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -478,4 +477,3 @@ spec:
           envFrom:
             - configMapRef:
                 name: { { include "helm-webapp.fullname" $ } }-config
-          {{- end }}
