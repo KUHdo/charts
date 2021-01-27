@@ -486,8 +486,6 @@ metadata:
     rollme: {{ randAlphaNum 5 | quote }}
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
     {{- include "helm-webapp.selectorLabels" . | nindent 6 }}
