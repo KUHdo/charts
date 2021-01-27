@@ -33,7 +33,7 @@ spec:
       securityContext:
       {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        {{- range $key, $config := .Values.containers.app }}
+        {{- range $key, $config := .Values.containers.bundle }}
         - name: {{ $key }}
           image: "{{ $config.repository }}:{{ $config.tag }}"
           imagePullPolicy: {{ $config.pullPolicy }}
@@ -232,103 +232,103 @@ spec:
             - name: APP_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: APP_KEY
             - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-db-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_DATABASE
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-db-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_PASSWORD
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-db-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_USER
             - name: MAIL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAIL_PASSWORD
             - name: MAILGUN_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAILGUN_SECRET
             - name: STRIPE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_KEY
             - name: STRIPE_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_SECRET
             - name: MIX_STRIPE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MIX_STRIPE_KEY
             - name: MIX_STRIPE_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MIX_STRIPE_SECRET
             - name: STRIPE_USER_PLAN
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_USER_PLAN
             - name: STRIPE_TAX_RATE
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_TAX_RATE
             - name: EEX_SFTP_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: EEX_SFTP_USERNAME
             - name: EEX_SFTP_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: EEX_SFTP_PASSWORD
             - name: EEX_SFTP_REMOTE_PATH
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: EEX_SFTP_REMOTE_PATH
             - name: LOG_SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: LOG_SLACK_WEBHOOK_URL
             - name: SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: SLACK_WEBHOOK_URL
             - name: PUSHER_APP_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: PUSHER_APP_SECRET
             {{ if eq (include "prodstaging" $) "true" }}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-redis
+                  name: {{ include "helm-webapp.fullname" $ }}-redis
                   key: redis-password
             {{ end }}
           envFrom:
             - configMapRef:
-                name: { { include "helm-webapp.fullname" $ } }-config
+                name: {{ include "helm-webapp.fullname" $ }}-config
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -380,100 +380,100 @@ spec:
             - name: APP_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: APP_KEY
             - name: DB_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-db-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_DATABASE
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-db-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_PASSWORD
             - name: DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-db-creds
+                  name: {{ include "helm-webapp.fullname" $ }}-db-creds
                   key: MYSQL_USER
             - name: MAIL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAIL_PASSWORD
             - name: MAILGUN_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAILGUN_SECRET
             - name: STRIPE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_KEY
             - name: STRIPE_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_SECRET
             - name: MIX_STRIPE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MIX_STRIPE_KEY
             - name: MIX_STRIPE_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MIX_STRIPE_SECRET
             - name: STRIPE_USER_PLAN
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_USER_PLAN
             - name: STRIPE_TAX_RATE
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: STRIPE_TAX_RATE
             - name: EEX_SFTP_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: EEX_SFTP_USERNAME
             - name: EEX_SFTP_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: EEX_SFTP_PASSWORD
             - name: EEX_SFTP_REMOTE_PATH
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: EEX_SFTP_REMOTE_PATH
             - name: LOG_SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: LOG_SLACK_WEBHOOK_URL
             - name: SLACK_WEBHOOK_URL
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: SLACK_WEBHOOK_URL
             - name: PUSHER_APP_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: PUSHER_APP_SECRET
-            { { if eq (include "prodstaging" $) "true" } }
+            {{ if eq (include "prodstaging" $) "true" }}
             - name: REDIS_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-redis
+                  name: {{ include "helm-webapp.fullname" $ }}-redis
                   key: redis-password
-            { { end } }
+            {{ end }}
           envFrom:
             - configMapRef:
-                name: { { include "helm-webapp.fullname" $ } }-config
+                name: {{ include "helm-webapp.fullname" $ }}-config

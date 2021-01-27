@@ -21,7 +21,7 @@ fullnameOverride: "kuhdo-webapp"
 # pod container configuration
 containers:
   # name of the container
-  app:
+  bundle:
     web:
       # image and version of the container
       repository: kuhdo/web

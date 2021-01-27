@@ -18,7 +18,7 @@ spec:
         - name: regcred
       containers:
         - name: db-migrations-seeds
-          image: "{{ .Values.containers.app.repository}}:{{ .Values.containers.app.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.containers.bundle.app.repository}}:{{ .Values.containers.bundle.app.tag | default .Chart.AppVersion }}"
           command:
             - /bin/sh
             - -c
