@@ -4,7 +4,7 @@ metadata:
   name: {{ include "helm-webapp.fullname" . }}-config
 data:
   APP_DEBUG: {{ .Values.dotenv.APP_DEBUG | default false  | quote }}
-  APP_ENV: {{ .Values.dotenv.APP_ENV  | default "production" quote }}
+  APP_ENV: {{ .Values.dotenv.APP_ENV  | default "production" | quote }}
   APP_LOG_LEVEL: {{ .Values.dotenv.APP_LOG_LEVEL  | default "debug" | quote }}
   APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   APP_NAME: {{ .Values.dotenv.APP_NAME  | default "KUHdo Gmbh" | quote}}
