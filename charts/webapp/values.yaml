@@ -39,13 +39,6 @@ containers:
       port: 9000
       portName: fpm
       args: "prod"
-    websockets:
-      repository: kuhdo/app
-      pullPolicy: IfNotPresent
-      tag: "1.4.2"
-      port: 6001
-      portName: websocket
-      args: "websockets"
   queue:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
@@ -56,6 +49,13 @@ containers:
     pullPolicy: IfNotPresent
     tag: "1.4.2"
     args: "scheduler"
+  websockets:
+    repository: kuhdo/app
+    pullPolicy: IfNotPresent
+    tag: "1.4.2"
+    port: 6001
+    portName: websocket
+    args: "websockets"
 
 
 # Configmap for laravel app container
