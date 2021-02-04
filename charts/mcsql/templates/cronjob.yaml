@@ -1,7 +1,7 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ include "mcsql.fullname" }}
+  name: {{ include "mcsql.fullname" . }}
 spec:
   schedule: {{ .Values.schedule | quote }}
   jobTemplate:
