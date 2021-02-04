@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "mcsql.fullname" }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: {{ include "mcsql.name" . }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            volumeMounts:
+            - name: data
+              mountPath: /data
+            envFrom:
+            - secretRef:
+                name: {{ include "mcsql.fullname" . }}
+            - configMapRef:
+                name: {{ include "mcsql.fullname" . }}
+          volumes:
+          - name: data
+          {{- if .Values.persistence.enabled }}
+            persistentVolumeClaim:
+              claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "mcsql.fullname" . }}{{- end }}
+          {{- else }}
+            emptyDir: {}
+          {{- end }}
