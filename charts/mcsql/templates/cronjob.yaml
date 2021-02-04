@@ -8,6 +8,7 @@ spec:
     spec:
       template:
         spec:
+          restartPolicy: Never
           containers:
           - name: {{ include "mcsql.name" . }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

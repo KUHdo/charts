@@ -4,10 +4,10 @@ metadata:
   name: {{ include "mcsql.fullname" . }}
   labels: {{- include "mcsql.labels" . | nindent 4 }}
 data:
-  PREFIX: {{ .Values.file.prefix | b64enc | quote }}
-  RM_OLDER_THAN: {{ .Values.file.rmOlderThan | b64enc | quote }}
-  MYSQL_HOST: {{ .Values.mysql.host | b64enc | quote }}
-  MYSQL_PORT: {{ .Values.mysql.port | b64enc | quote }}
-  S3_HOST: {{ .Values.s3.host | b64enc | quote }}
-  S3_BUCKET: {{ .Values.s3.bucket | b64enc | quote }}
+  PREFIX: {{ .Values.file.prefix | quote }}
+  RM_OLDER_THAN: {{ .Values.file.rmOlderThan | quote }}
+  MYSQL_HOST: {{ .Values.mysql.host | quote }}
+  MYSQL_PORT: {{ .Values.mysql.port | quote }}
+  S3_HOST: {{ .Values.s3.host |  quote }}
+  S3_BUCKET: {{ .Values.s3.bucket | quote }}
 
