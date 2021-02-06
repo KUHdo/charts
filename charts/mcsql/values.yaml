@@ -5,22 +5,20 @@
 image:
   repository: kuhdo/mcsql
   pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: "0.1.0"
 
 nameOverride: ""
 fullnameOverride: ""
 
 schedule: "1 * * * *"
 
-file:
-  prefix: ""
-  rmOlderThan: ""
+# file:
+#   prefix: ""
+#   rmOlderThan: ""
 
 mysql:
   host: ""
-  port: ""
-  user: ""
+  # port: "3306"
+  # user: "root"
   password: ""
 
 s3:
