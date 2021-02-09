@@ -1,6 +1,5 @@
 {{- if .Values.ingress.enabled }}
 {{- $fullName := include "helm-webapp.fullname" . }}
-{{- $issuer := ternary "letsencrypt-production" "letsencrypt-staging" (eq (include "prodstaging" .) "true") }}
 {{- if .Values.ingress.tls }}
 {{- range .Values.ingress.tls }}
 apiVersion: cert-manager.io/v1
@@ -14,7 +13,7 @@ spec:
     - {{ . | quote }}
     {{- end }}
   issuerRef:
-    name: {{ $issuer }}
+    name: letsencrypt-production
     kind: ClusterIssuer
 {{- end }}
 {{- end }}
