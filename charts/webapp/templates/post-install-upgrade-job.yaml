@@ -19,6 +19,7 @@ spec:
       containers:
         - name: db-migrations-seeds
           image: "{{ .Values.containers.bundle.app.repository}}:{{ .Values.containers.bundle.app.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.containers.bundle.app.pullPolicy }}
           command:
             - /bin/sh
             - -c

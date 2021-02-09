@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mcsql.fullname" . }}
+  labels: {{- include "mcsql.labels" . | nindent 4 }}
+data:
+  {{- if .Values.file.prefix }}
+  PREFIX: {{ .Values.file.prefix | quote }}
+  {{- end }}
+  {{- if .Values.file.rmOlderThan }}
+  RM_OLDER_THAN: {{ .Values.file.rmOlderThan | quote }}
+  {{- end }}
+  MYSQL_HOST: {{ .Values.mysql.host | quote }}
+  {{- if .Values.mysql.port }}
+  MYSQL_PORT: {{ .Values.mysql.port | quote }}
+  {{- end }}
+  S3_HOST: {{ .Values.s3.host |  quote }}
+  S3_BUCKET: {{ .Values.s3.bucket | quote }}
+
