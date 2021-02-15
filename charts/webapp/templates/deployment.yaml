@@ -513,6 +513,9 @@ spec:
           args: [{{ $config.args | quote}}]
           {{end}}
           resources: { }
+          ports:
+            - name: {{ $config.portName }}
+              containerPort: {{ $config.port }}
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
