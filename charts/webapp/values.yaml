@@ -111,7 +111,7 @@ secrets:
     MAILGUN_SECRET: key-a05395e...
     MAIL_PASSWORD: test123
     SLACK_WEBHOOK_URL: supersecret
-    PUSHER_APP_SECRET:
+    PUSHER_APP_SECRET: pushersecret
   database:
     MYSQL_DATABASE: homestead
     MYSQL_USER: homestead
