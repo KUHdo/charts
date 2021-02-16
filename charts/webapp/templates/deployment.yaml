@@ -108,36 +108,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAILGUN_SECRET
-            - name: STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_KEY
-            - name: STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_SECRET
-            - name: MIX_STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_KEY
-            - name: MIX_STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_SECRET
-            - name: STRIPE_USER_PLAN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_USER_PLAN
-            - name: STRIPE_TAX_RATE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_TAX_RATE
             - name: EEX_SFTP_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -259,36 +229,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAILGUN_SECRET
-            - name: STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_KEY
-            - name: STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_SECRET
-            - name: MIX_STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_KEY
-            - name: MIX_STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_SECRET
-            - name: STRIPE_USER_PLAN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_USER_PLAN
-            - name: STRIPE_TAX_RATE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_TAX_RATE
             - name: EEX_SFTP_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -407,36 +347,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAILGUN_SECRET
-            - name: STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_KEY
-            - name: STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_SECRET
-            - name: MIX_STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_KEY
-            - name: MIX_STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_SECRET
-            - name: STRIPE_USER_PLAN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_USER_PLAN
-            - name: STRIPE_TAX_RATE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_TAX_RATE
             - name: EEX_SFTP_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -553,36 +463,6 @@ spec:
                 secretKeyRef:
                   name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: MAILGUN_SECRET
-            - name: STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_KEY
-            - name: STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_SECRET
-            - name: MIX_STRIPE_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_KEY
-            - name: MIX_STRIPE_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: MIX_STRIPE_SECRET
-            - name: STRIPE_USER_PLAN
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_USER_PLAN
-            - name: STRIPE_TAX_RATE
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
-                  key: STRIPE_TAX_RATE
             - name: EEX_SFTP_USERNAME
               valueFrom:
                 secretKeyRef:

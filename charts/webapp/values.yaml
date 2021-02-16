@@ -90,8 +90,6 @@ dotenv:
   TELESCOPE_REQUEST_WATCHER: "false"
   TELESCOPE_ENABLED: "false"
   EEX_SFTP_HOST: "sftp.datasource.eex-group.com"
-  MIX_VUE_APP_I18N_LOCALE: "de"
-  MIX_VUE_APP_I18N_FALLBACK_LOCALE: "en"
   TRUST_PROXY: "*"
   PUSHER_ENDPOINT_SCHEME: "https"
   PUSHER_APP_ID:
@@ -112,13 +110,7 @@ secrets:
     LOG_SLACK_WEBHOOK_URL: supersecret
     MAILGUN_SECRET: key-a05395e...
     MAIL_PASSWORD: test123
-    MIX_STRIPE_KEY: supersecret
-    MIX_STRIPE_SECRET: supersecret
     SLACK_WEBHOOK_URL: supersecret
-    STRIPE_KEY: supersecret
-    STRIPE_SECRET: supersecret
-    STRIPE_TAX_RATE: txr_1EPpn...
-    STRIPE_USER_PLAN: plan_DNd...1
     PUSHER_APP_SECRET:
   database:
     MYSQL_DATABASE: homestead

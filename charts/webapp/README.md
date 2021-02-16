@@ -44,8 +44,6 @@
 | dotenv.TELESCOPE_REQUEST_WATCHER  | TELESCOPE_REQUEST_WATCHER | default value | 
 | dotenv.TELESCOPE_ENABLED  | TELESCOPE_ENABLED | default value | 
 | dotenv.EEX_SFTP_HOST  | EEX_SFTP_HOST | default value | 
-| dotenv.MIX_VUE_APP_I18N_LOCALE  | MIX_VUE_APP_I18N_LOCALE | default value | 
-| dotenv.MIX_VUE_APP_I18N_FALLBACK_LOCALE  | MIX_VUE_APP_I18N_FALLBACK_LOCALE | default value | 
 | dotenv.TRUST_PROXY  | TRUST_PROXY | default value | 
 | dotenv.PUSHER_ENDPOINT_SCHEME  | PUSHER_ENDPOINT_SCHEME | default value | 
 | dotenv.PUSHER_APP_ID  | PUSHER_APP_ID | default value | 
@@ -59,11 +57,5 @@
 | secrets.webapp.LOG_SLACK_WEBHOOK_URL | LOG_SLACK_WEBHOOK_URL | default value |
 | secrets.webapp.MAILGUN_SECRET | MAILGUN_SECRET | default value |
 | secrets.webapp.MAIL_PASSWORD | MAIL_PASSWORD | default value |
-| secrets.webapp.MIX_STRIPE_KEY | MIX_STRIPE_KEY | default value |
-| secrets.webapp.MIX_STRIPE_SECRET | MIX_STRIPE_SECRET | default value |
 | secrets.webapp.SLACK_WEBHOOK_URL | SLACK_WEBHOOK_URL | default value |
-| secrets.webapp.STRIPE_KEY | STRIPE_KEY | default value |
-| secrets.webapp.STRIPE_SECRET | STRIPE_SECRET | default value |
-| secrets.webapp.STRIPE_TAX_RATE | STRIPE_TAX_RATE | default value |
-| secrets.webapp.STRIPE_USER_PLAN | STRIPE_USER_PLAN | default value |
 | secrets.webapp.PUSHER_APP_SECRET | PUSHER_APP_SECRET | default value |
