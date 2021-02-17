@@ -187,7 +187,8 @@ ingressRouteTCP:
       name: websocket
       host: ws.dev.kuhdo.local
       port: 6001
-  tls: []
+  tls:
+    secretName: websocket-cert
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
