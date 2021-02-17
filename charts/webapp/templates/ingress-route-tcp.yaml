@@ -13,8 +13,7 @@ spec:
     {{- end }}
   {{- if .Values.ingressRouteTCP.tls }}
   tls:
-    {{- range .Values.ingressRouteTCP.tls }}
-    {{- end }}
+    secretName: {{ .Values.ingressRouteTCP.tls.secretName }}
   {{- end }}
   routes:
     {{- range .Values.ingressRouteTCP.hosts }}
