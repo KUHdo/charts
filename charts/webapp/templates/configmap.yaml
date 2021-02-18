@@ -43,4 +43,4 @@ data:
   PUSHER_ENDPOINT_PORT: {{ .Values.ingressRouteTCP.hosts.websocket.port | default "6001" | quote }}
   PUSHER_FORCE_TLS: {{ .Values.dotenv.PUSHER_FORCE_TLS | default "true" | quote }}
   ECHO_ENCRYPTED: {{ .Values.dotenv.ECHO_ENCRYPTED | default "true" | quote }}
-  PUSHER_APP_CLUSTER: {{ .Values.dotenv.PUSHER_APP_CLUSTER | default "default" | quote }}
+  PUSHER_APP_CLUSTER: {{ .Values.dotenv.PUSHER_APP_CLUSTER | default "" | quote }}
