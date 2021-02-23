@@ -1,0 +1,27 @@
+{{- if .Values.ingressRoute.enabled -}}
+{{- $fullName := include "helm-webapp.fullname" . -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}
+  labels:
+    {{- include "helm-webapp.labels" . | nindent 4 }}
+spec:
+  entryPoints:
+    {{- range .Values.ingressRoute.entryPoints }}
+    - {{ . | quote }}
+    {{- end }}
+  {{- if .Values.ingressRoute.tls }}
+  tls:
+    secretName: {{ .Values.ingressRoute.tls.secretName }}
+  {{- end }}
+  routes:
+    {{- range .Values.ingressRoute.hosts }}
+    - match: HostSNI(`{{ .host }}`)
+      {{- $name := .name }}
+      {{- $port := .port }}
+      services:
+        - name: {{ $fullName }}-{{ $name }}
+          port: {{ $port }}
+    {{- end }}
+{{- end }}
