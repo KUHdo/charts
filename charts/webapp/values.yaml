@@ -190,6 +190,18 @@ ingressRouteTCP:
   tls:
     secretName: websocket-cert
 
+ingressRoute:
+  enabled: false
+  entryPoints:
+    - websecure
+  hosts:
+    websocket:
+      name: websocket
+      host: ws.dev.kuhdo.local
+      port: 6001
+  tls:
+    secretName: websocket-cert
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
