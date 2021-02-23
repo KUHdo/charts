@@ -176,24 +176,16 @@ ingress:
       host: dev.kuhdo.local
       paths: [/]
       port: http
+    websocket:
+      name: websocket
+      host: ws.dev.kuhdo.local
+      port: websocket
   tls: []
 
 ingressRouteTCP:
   enabled: false
   entryPoints:
     - websocket
-  hosts:
-    websocket:
-      name: websocket
-      host: ws.dev.kuhdo.local
-      port: 6001
-  tls:
-    secretName: websocket-cert
-
-ingressRoute:
-  enabled: false
-  entryPoints:
-    - websecure
   hosts:
     websocket:
       name: websocket
