@@ -53,8 +53,8 @@ containers:
     repository: kuhdo/app
     pullPolicy: IfNotPresent
     tag: "1.4.2"
-    port: 80
-    portName: http
+    port: 6001
+    portName: websocket
     args: "websockets"
 
 
@@ -178,16 +178,15 @@ ingress:
       port: http
   tls: []
 
-ingressRoute:
+ingressRouteTCP:
   enabled: false
   entryPoints:
-    - websecure
-    - web
+    - websocket
   hosts:
     websocket:
       name: websocket
       host: ws.dev.kuhdo.local
-      port: http
+      port: 6001
   tls:
     secretName: websocket-cert
 

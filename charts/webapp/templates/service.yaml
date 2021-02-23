@@ -38,9 +38,9 @@ metadata:
 spec:
   type: {{  .Values.service.type }}
   ports:
-    - port: 80
-      targetPort: http
+    - port: 6001
+      targetPort: websocket
       protocol: TCP
-      name: http
+      name: websocket
   selector:
   {{- include "helm-webapp.selectorLabels" . | nindent 4 }}
