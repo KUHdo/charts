@@ -1,7 +1,7 @@
 {{- if .Values.ingressRoute.enabled -}}
 {{- $fullName := include "helm-webapp.fullname" . -}}
 apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
+kind: IngressRoute
 metadata:
   name: {{ $fullName }}
   labels:
