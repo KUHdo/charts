@@ -54,7 +54,7 @@ containers:
     pullPolicy: IfNotPresent
     tag: "1.4.2"
     port: 80
-    portName: websocket
+    portName: http
     args: "websockets"
 
 
@@ -178,18 +178,6 @@ ingress:
       port: http
   tls: []
 
-#ingressRouteTCP:
-#  enabled: false
-#  entryPoints:
-#    - websocket
-#  hosts:
-#    websocket:
-#      name: websocket
-#      host: ws.dev.kuhdo.local
-#      port: 6001
-#  tls:
-#    secretName: websocket-cert
-
 ingressRoute:
   enabled: false
   entryPoints:
@@ -199,7 +187,7 @@ ingressRoute:
     websocket:
       name: websocket
       host: ws.dev.kuhdo.local
-      port: 443
+      port: http
   tls:
     secretName: websocket-cert
 
