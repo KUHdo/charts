@@ -179,6 +179,7 @@ ingress:
     websocket:
       name: websocket
       host: ws.dev.kuhdo.local
+      paths: [/]
       port: websocket
   tls: []
 
