@@ -38,9 +38,8 @@ data:
   PUSHER_APP_ID: {{ .Values.dotenv.PUSHER_APP_ID | default (include "helm-webapp.fullname" .) | quote }}
   PUSHER_APP_KEY: {{ .Values.dotenv.PUSHER_APP_KEY | default (include "helm-webapp.fullname" .) | quote }}
   PUSHER_KEY: {{ .Values.dotenv.PUSHER_APP_KEY | default (include "helm-webapp.fullname" .) | quote }}
-  PUSHER_ENDPOINT: {{ .Values.ingressRouteTCP.hosts.websocket.host }}
   PUSHER_ENDPOINT_SCHEME: {{ .Values.dotenv.PUSHER_ENDPOINT_SCHEME | default "http" | quote }}
-  PUSHER_ENDPOINT_PORT: {{ .Values.ingressRouteTCP.hosts.websocket.port | default "6001" | quote }}
+  PUSHER_ENDPOINT_PORT: {{ .Values.dotenv.PUSHER_ENDPOINT_PORT | default "6001" | quote }}
   PUSHER_FORCE_TLS: {{ .Values.dotenv.PUSHER_FORCE_TLS | default "true" | quote }}
   ECHO_ENCRYPTED: {{ .Values.dotenv.ECHO_ENCRYPTED | default "true" | quote }}
   PUSHER_HOST: {{ (include "helm-webapp.fullname" .) }}-websocket
