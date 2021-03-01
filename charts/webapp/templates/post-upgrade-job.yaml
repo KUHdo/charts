@@ -1,0 +1,51 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "helm-webapp.fullname" . }}
+  annotations:
+    "helm.sh/hook": post-upgrade
+    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    metadata:
+      name: "{{ .Release.Name }}"
+      labels:
+      {{- include "helm-webapp.selectorLabels" . | nindent 8 }}
+    spec:
+      restartPolicy: Never
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: queue-upgrade-restart
+          image: "{{ .Values.containers.bundle.app.repository}}:{{ .Values.containers.bundle.app.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.containers.bundle.app.pullPolicy }}
+          command:
+            - /bin/sh
+            - -c
+            - php artisan horizon:purge && php artisan horizon:terminate && php artisan queue:restart
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ include "helm-webapp.fullname" $ }}-config
+                  key: DB_HOST
+            {{- range $key, $value := .Values.secrets.webapp }}
+            - name: {{ $key }}
+              value: {{ $value }}
+            {{ end -}}
+            - name: APP_KEY
+              value: {{ include "laravel.app_key" . }}
+            - name: DB_DATABASE
+              value: {{ .Values.secrets.database.MYSQL_DATABASE}}
+            - name: DB_PASSWORD
+              value: {{ .Values.secrets.database.MYSQL_PASSWORD}}
+            - name: DB_USERNAME
+              value: {{ .Values.secrets.database.MYSQL_USER}}
+            {{ if eq (include "prodstaging" .) "true" -}}
+            - name: REDIS_PASSWORD
+              value: {{ .Values.secrets.redis.password}}
+            {{ end }}
+          envFrom:
+            - configMapRef:
+                name: {{ include "helm-webapp.fullname" $ }}-config
