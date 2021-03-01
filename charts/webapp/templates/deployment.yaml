@@ -489,7 +489,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "helm-webapp.fullname" . }}-websocket
+  name: {{ include "helm-webapp.fullname" . }}-websockets
   annotations:
     rollme: {{ randAlphaNum 5 | quote }}
 spec:
@@ -513,8 +513,8 @@ spec:
       securityContext:
       {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        {{- $config := .Values.containers.websocket }}
-        - name: websocket
+        {{- $config := .Values.containers.websockets }}
+        - name: websockets
           image: "{{ $config.repository }}:{{ $config.tag }}"
           imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
