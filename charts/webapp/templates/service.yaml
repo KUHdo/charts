@@ -32,7 +32,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "helm-webapp.fullname" . | kebabcase }}-websocket
+  name: {{ include "helm-webapp.fullname" . | kebabcase }}-websockets
   labels:
   {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
