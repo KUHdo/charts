@@ -24,7 +24,7 @@ spec:
             - /bin/sh
             - -c
             {{ if .Values.tags.dynamic}}
-            - php artisan clear-compiled && php artisan cache:clear && php artisan view:clear && php artisan optimize && php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod
+            - php artisan clear-compiled && php artisan view:clear && php artisan optimize && php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod
             {{- else }}
             - php artisan clear-compiled && php artisan view:clear && php artisan optimize && php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
             {{ end }}
