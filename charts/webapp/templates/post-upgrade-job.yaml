@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: {{ include "helm-webapp.fullname" . }}
   annotations:
-    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook": post-upgrade
     "helm.sh/hook-weight": "-1"
     "helm.sh/hook-delete-policy": hook-succeeded
 spec:
@@ -17,17 +17,13 @@ spec:
       imagePullSecrets:
         - name: regcred
       containers:
-        - name: db-migrations-seeds
+        - name: queue-upgrade-restart
           image: "{{ .Values.containers.bundle.app.repository}}:{{ .Values.containers.bundle.app.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.containers.bundle.app.pullPolicy }}
           command:
             - /bin/sh
             - -c
-            {{ if .Values.tags.dynamic}}
-            - php artisan clear-compiled && php artisan view:clear && php artisan optimize && php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod
-            {{- else }}
-            - php artisan clear-compiled && php artisan view:clear && php artisan optimize && php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
-            {{ end }}
+            - php artisan horizon:purge && php artisan horizon:terminate && php artisan queue:restart
           env:
             - name: DB_HOST
               valueFrom:

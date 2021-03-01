@@ -355,6 +355,7 @@ spec:
         {{- end }}
       labels:
         {{- include "helm-webapp.selectorLabels" . | nindent 8 }}
+        date: "{{ now | unixEpoch }}"
     spec:
       imagePullSecrets:
         - name: regcred
@@ -370,6 +371,13 @@ spec:
           args: [{{ $config.args | quote}}]
           {{end}}
           resources: { }
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - php artisan horizon:terminate
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
