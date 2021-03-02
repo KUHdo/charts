@@ -41,18 +41,19 @@ containers:
       args: "prod"
   queue:
     repository: kuhdo/app
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     tag: "1.4.2"
     args: "queue"
   cron:
     repository: kuhdo/app
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     tag: "1.4.2"
     args: "scheduler"
   websocket:
     repository: kuhdo/app
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
     tag: "1.4.2"
+    # this port is internal for the service
     port: 6001
     portName: websocket
     args: "websockets"
