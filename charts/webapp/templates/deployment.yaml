@@ -321,13 +321,6 @@ spec:
           args: [{{ $config.args | quote}}]
           {{end}}
           resources: { }
-          lifecycle:
-            preStop:
-              exec:
-                command:
-                  - /bin/sh
-                  - -c
-                  - php artisan horizon:terminate
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
