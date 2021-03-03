@@ -35,8 +35,12 @@ spec:
       containers:
         {{- range $key, $config := .Values.containers.bundle }}
         - name: {{ $key }}
-          image: "{{ $config.repository }}:{{ $config.tag }}"
+          image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
           imagePullPolicy: {{ $config.pullPolicy }}
+          resources: { }
+          volumeMounts:
+            - name: {{ include "helm-webapp.fullname" $ }}-storage
+              mountPath: src/storage/app/
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]
           {{end}}
@@ -62,11 +66,7 @@ spec:
               value: "localhost"
             - name: PHP_UP_STREAM_PORT
               value: "9000"
-          volumeMounts:
-            - name: {{ include "helm-webapp.fullname" $ }}-storage
-              mountPath: src/storage/app/
           {{ end }}
-          resources: { }
           {{ if ne $key "web" }}
           securityContext:
             runAsNonRoot: true
@@ -74,9 +74,6 @@ spec:
             capabilities:
               drop:
                 - ALL
-          volumeMounts:
-            - name: {{ include "helm-webapp.fullname" $ }}-storage
-              mountPath: src/storage/app/
           env:
             - name: APP_KEY
               valueFrom:
@@ -191,7 +188,7 @@ spec:
       containers:
         {{- $config := .Values.containers.cron }}
         - name: cron
-          image: "{{ $config.repository }}:{{ $config.tag }}"
+          image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
           imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]
@@ -315,7 +312,7 @@ spec:
       containers:
         {{- $config := .Values.containers.queue }}
         - name: queue
-          image: "{{ $config.repository }}:{{ $config.tag }}"
+          image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
           imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]
@@ -433,7 +430,7 @@ spec:
       containers:
         {{- $config := .Values.containers.websocket }}
         - name: websocket
-          image: "{{ $config.repository }}:{{ $config.tag }}"
+          image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
           imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]

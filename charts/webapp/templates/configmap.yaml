@@ -8,7 +8,7 @@ data:
   APP_LOG_LEVEL: {{ .Values.dotenv.APP_LOG_LEVEL  | default "debug" | quote }}
   APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   APP_NAME: {{ .Values.dotenv.APP_NAME  | default "KUHdo Gmbh" | quote}}
-  APP_URL: {{ .Values.dotenv.APP_URL | default "https://portal.kuhdo.de" | quote }}
+  APP_URL: {{ .Values.dotenv.APP_URL | default "http://dev.kuhdo.local" | quote }}
   LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER | default "redis"  | quote }}
   CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER  | default "redis" | quote }}

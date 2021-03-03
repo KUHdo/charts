@@ -7,10 +7,10 @@ metadata:
   name: {{ $fullName }}
   labels:
     {{- include "helm-webapp.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
-    {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- range $key, $value := .Values.ingress.annotations }}
+      {{ $key }}: {{ $value | quote }}
+    {{- end }}
 spec:
   {{- if .Values.ingress.tls }}
   tls:
@@ -40,7 +40,7 @@ spec:
               service:
                 name: {{ $fullName }}-{{ $name }}
                 port:
-                  number: {{ $port }}
+                  name: {{ $port }}
               {{ end }}
           {{- end }}
     {{- end }}

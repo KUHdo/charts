@@ -5,6 +5,34 @@
 ## Develop  
 ``helm install kuhdo-app ./ --dry-run --debug``  
 ---
+### Run on local cluster
+
+#### Install Traefik via helm
+```bash
+helm upgrade \
+      --install \
+      --create-namespace \
+      --namespace kube-system \
+      --repo https://helm.traefik.io/traefik \
+      --version 9.11.0 \
+      traefik \
+      traef
+```
+
+#### Install KUHdo webapp via helm
+```bash
+helm upgrade kuhdo-app \
+    . \
+    --install \
+    --namespace kuhdo-app \
+    --create-namespace \
+    --set tags.local=true \
+    --set imageCredentials.username= \
+    --set imageCredentials.password= \
+    --set secrets.webapp.EEX_SFTP_USERNAME= \
+    --set secrets.webapp.EEX_SFTP_PASSWORD= \
+    --set imageTag=develop
+```
 
 ## Scale and update
 

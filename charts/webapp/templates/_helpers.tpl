@@ -102,8 +102,10 @@ Return if environment is staging or production
 {{- define "dynamiclocal" -}}
 {{- $dynamicValue := and (hasKey .Values.tags "dynamic") (kindIs "bool" .Values.tags.dynamic)  }}
 {{- $localValue := and (hasKey .Values.tags "local") (kindIs "bool" .Values.tags.local)  }}
+{{- if or $dynamicValue $localValue }}
 {{- (or .Values.tags.dynamic .Values.tags.local) }}
 {{- end -}}
+{{- end }}
 
 {{/*
 Return the appropriate apiVersion for networkpolicy.
@@ -113,5 +115,16 @@ Return the appropriate apiVersion for networkpolicy.
 {{- print "networking.k8s.io/v1beta1" -}}
 {{- else -}}
 {{- print "networking.k8s.io/v1" -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Return Image Tag
+*/}}
+{{- define "imageTag" -}}
+{{- if not (empty .Values.imageTag) -}}
+    {{- .Values.imageTag -}}
+{{- else -}}
+    {{- .Chart.AppVersion -}}
 {{- end -}}
 {{- end -}}
