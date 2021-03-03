@@ -8,6 +8,11 @@ metadata:
   labels:
     {{- include "helm-webapp.labels" . | nindent 4 }}
   annotations:
+    {{- if .Values.certificate.enabled }}
+    kubernetes.io/ingress.class: "traefik-cert-manager"
+    kubernetes.io/router.entrypoints: "websecure"
+    kubernetes.io/router.tls: "true"
+    {{- end }}
     {{- range $key, $value := .Values.ingress.annotations }}
       {{ $key }}: {{ $value | quote }}
     {{- end }}

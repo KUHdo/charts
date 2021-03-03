@@ -18,7 +18,7 @@ replicamaxUnavailable: 50%
 nameOverride: "kuhdo-webapp"
 fullnameOverride: "kuhdo-webapp"
 
-# images tag for all containers
+# image tag for all containers
 # default value is appVersion
 imageTag:
 
@@ -29,26 +29,30 @@ containers:
     web:
       # image and version of the container
       repository: kuhdo/web
+      pullPolicy: Always
       port: 80
       portName: http
     app:
       repository: kuhdo/app
+      pullPolicy: Always
       port: 9000
       portName: fpm
       args: "prod"
   queue:
     repository: kuhdo/app
+    pullPolicy: Always
     args: "queue"
   cron:
     repository: kuhdo/app
+    pullPolicy: Always
     args: "scheduler"
   websocket:
     repository: kuhdo/app
+    pullPolicy: Always
     # this port is internal for the service
     port: 6001
     portName: websocket
     args: "websockets"
-
 
 # Configmap for laravel app container
 dotenv:
@@ -158,10 +162,11 @@ service:
 
 ingress:
   enabled: true
-  annotations:
-    kubernetes.io/ingress.class: "traefik-cert-manager"
-    kubernetes.io/router.entrypoints: "websecure"
-    kubernetes.io/router.tls: "true"
+  # If certificate.enabled is set to true, annotations will automatically be set
+  annotations: {}
+    # kubernetes.io/ingress.class: "traefik-cert-manager"
+    # kubernetes.io/router.entrypoints: "websecure"
+    # kubernetes.io/router.tls: "true"
   hosts:
     web:
       name: web
@@ -175,8 +180,10 @@ ingress:
       port: websocket
   tls: []
 
+# external chart for handling tls certificates
 certificate:
   enabled: false
+  # name of tls secret
   nameOverride: local-cert
   hosts:
     - dev.kuhdo.local

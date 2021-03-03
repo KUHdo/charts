@@ -36,7 +36,7 @@ spec:
         {{- range $key, $config := .Values.containers.bundle }}
         - name: {{ $key }}
           image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
-          imagePullPolicy: Always
+          imagePullPolicy: {{ $config.pullPolicy }}
           resources: { }
           volumeMounts:
             - name: {{ include "helm-webapp.fullname" $ }}-storage
@@ -189,7 +189,7 @@ spec:
         {{- $config := .Values.containers.cron }}
         - name: cron
           image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
-          imagePullPolicy: Always
+          imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]
           {{end}}
@@ -313,7 +313,7 @@ spec:
         {{- $config := .Values.containers.queue }}
         - name: queue
           image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
-          imagePullPolicy: Always
+          imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]
           {{end}}
@@ -431,7 +431,7 @@ spec:
         {{- $config := .Values.containers.websocket }}
         - name: websocket
           image: "{{ $config.repository }}:{{ include "imageTag" $ }}"
-          imagePullPolicy: Always
+          imagePullPolicy: {{ $config.pullPolicy }}
           {{ if $config.args }}
           args: [{{ $config.args | quote}}]
           {{end}}
