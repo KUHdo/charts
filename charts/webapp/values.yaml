@@ -176,10 +176,10 @@ ingress:
   tls: []
 
 certificate:
-  enabled: true
-  nameOverride: matomo-cert
+  enabled: false
+  nameOverride: local-cert
   hosts:
-    - matomo.kuhdo.dev
+    - dev.kuhdo.local
   issuer: letsencrypt-production
 
 resources: {}

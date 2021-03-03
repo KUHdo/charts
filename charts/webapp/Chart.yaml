@@ -49,6 +49,10 @@ dependencies:
     tags:
       - dynamic
       - local
+  - name: certificate
+    version: ^0.1.0
+    repository: https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads
+    condition: certificate.enabled
 maintainers:
   - name: KUHdo GmbH
     email: dev@kuhdo.de
