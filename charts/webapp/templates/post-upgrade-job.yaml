@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "helm-webapp.fullname" . }}
+  name: {{ include "helm-webapp.fullname" . }}-post-upgrade
   annotations:
     "helm.sh/hook": post-upgrade
     "helm.sh/hook-weight": "-1"
@@ -18,7 +18,7 @@ spec:
         - name: regcred
       containers:
         - name: queue-upgrade-restart
-          image: "{{ .Values.containers.bundle.app.repository}}:{{ .Values.containers.bundle.app.tag | default .Chart.AppVersion }}"
+          image: "{{ .Values.containers.bundle.app.repository}}:{{ include "imageTag" $ }}"
           imagePullPolicy: {{ .Values.containers.bundle.app.pullPolicy }}
           command:
             - /bin/sh
