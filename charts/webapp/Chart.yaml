@@ -21,7 +21,7 @@ version: 0.1.4
 # incremented each time you make changes to the application. Versions are not expected to
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 1.4.2
-icon: https://portal.kuhdo.de/images/logo_schrift.svg
+icon: http://portal.kuhdo.de/images/logo_schrift.svg
 home: https://bitbucket.org/kuhdo/charts/
 sources:
   - https://bitbucket.org/kuhdo/charts/

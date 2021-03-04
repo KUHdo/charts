@@ -61,12 +61,12 @@ dotenv:
   APP_LOG_LEVEL: "debug"
   APP_LOG_CHANNEL: "errorlog"
   APP_NAME: "KUHdo GmbH"
-  APP_URL: "http://dev.kuhdo.local"
+  APP_URL: "http://portal.kuhdo.de"
   BROADCAST_DRIVER: "redis"
   CACHE_DRIVER: "redis"
   QUEUE_DRIVER: "redis"
   SESSION_DRIVER: "redis"
-  SESSION_DOMAIN: ".dev.kuhdo.local"
+  SESSION_DOMAIN: ".portal.kuhdo.de"
   SESSION_CONNECTION: "redis"
   DB_CONNECTION: "mariadb"
   DB_HOST: "database-svc"
@@ -87,7 +87,7 @@ dotenv:
   TELESCOPE_ENABLED: "false"
   EEX_SFTP_HOST: "sftp.datasource.eex-group.com"
   TRUST_PROXY: "*"
-  PUSHER_ENDPOINT_SCHEME: "http"
+  PUSHER_ENDPOINT_SCHEME: "https"
   PUSHER_APP_ID: "kuhdo-webapp"
   PUSHER_APP_KEY: "kuhdo-webapp"
   PUSHER_FORCE_TLS: "false"
@@ -170,23 +170,23 @@ ingress:
   hosts:
     web:
       name: web
-      host: dev.kuhdo.local
+      host: portal.kuhdo.de
       paths: [/]
       port: http
     websocket:
       name: websocket
-      host: ws.dev.kuhdo.local
+      host: ws.portal.kuhdo.de
       paths: [/]
       port: websocket
   tls: []
 
 # external chart for handling tls certificates
 certificate:
-  enabled: false
+  enabled: true
   # name of tls secret
-  nameOverride: local-cert
+  nameOverride: production-cert
   hosts:
-    - dev.kuhdo.local
+    - portal.kuhdo.de
   issuer: letsencrypt-production
 
 resources: {}
