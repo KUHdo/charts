@@ -8,7 +8,7 @@ data:
   APP_LOG_LEVEL: {{ .Values.dotenv.APP_LOG_LEVEL  | default "debug" | quote }}
   APP_LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   APP_NAME: {{ .Values.dotenv.APP_NAME  | default "KUHdo Gmbh" | quote}}
-  APP_URL: {{ .Values.dotenv.APP_URL | default "https://portal.kuhdo.de" | quote }}
+  APP_URL: {{ .Values.dotenv.APP_URL | default "http://portal.kuhdo.de" | quote }}
   LOG_CHANNEL: {{ .Values.dotenv.APP_LOG_CHANNEL  | default "errorlog" | quote }}
   BROADCAST_DRIVER: {{ .Values.dotenv.BROADCAST_DRIVER | default "redis"  | quote }}
   CACHE_DRIVER: {{ .Values.dotenv.CACHE_DRIVER  | default "redis" | quote }}
@@ -38,7 +38,7 @@ data:
   PUSHER_APP_ID: {{ .Values.dotenv.PUSHER_APP_ID | default (include "helm-webapp.fullname" .) | quote }}
   PUSHER_APP_KEY: {{ .Values.dotenv.PUSHER_APP_KEY | default (include "helm-webapp.fullname" .) | quote }}
   PUSHER_KEY: {{ .Values.dotenv.PUSHER_APP_KEY | default (include "helm-webapp.fullname" .) | quote }}
-  PUSHER_ENDPOINT_SCHEME: {{ .Values.dotenv.PUSHER_ENDPOINT_SCHEME | default "http" | quote }}
+  PUSHER_ENDPOINT_SCHEME: {{ .Values.dotenv.PUSHER_ENDPOINT_SCHEME | default "https" | quote }}
   PUSHER_ENDPOINT_PORT: {{ .Values.dotenv.PUSHER_ENDPOINT_PORT | default "6001" | quote }}
   PUSHER_FORCE_TLS: {{ .Values.dotenv.PUSHER_FORCE_TLS | default "true" | quote }}
   ECHO_ENCRYPTED: {{ .Values.dotenv.ECHO_ENCRYPTED | default "true" | quote }}

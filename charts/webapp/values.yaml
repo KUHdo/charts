@@ -18,6 +18,10 @@ replicamaxUnavailable: 50%
 nameOverride: "kuhdo-webapp"
 fullnameOverride: "kuhdo-webapp"
 
+# image tag for all containers
+# default value is appVersion
+imageTag:
+
 # pod container configuration
 containers:
   # name of the container
@@ -26,38 +30,29 @@ containers:
       # image and version of the container
       repository: kuhdo/web
       pullPolicy: Always
-      # Overrides the image tag whose default is the chart appVersion.
-      tag: "latest"
-      # live- and readiness probe is only set  if
-      # the container has a port list entry
       port: 80
       portName: http
     app:
       repository: kuhdo/app
       pullPolicy: Always
-      tag: "1.4.2"
       port: 9000
       portName: fpm
       args: "prod"
   queue:
     repository: kuhdo/app
     pullPolicy: Always
-    tag: "1.4.2"
     args: "queue"
   cron:
     repository: kuhdo/app
     pullPolicy: Always
-    tag: "1.4.2"
     args: "scheduler"
   websocket:
     repository: kuhdo/app
     pullPolicy: Always
-    tag: "1.4.2"
     # this port is internal for the service
     port: 6001
     portName: websocket
     args: "websockets"
-
 
 # Configmap for laravel app container
 dotenv:
@@ -93,10 +88,10 @@ dotenv:
   EEX_SFTP_HOST: "sftp.datasource.eex-group.com"
   TRUST_PROXY: "*"
   PUSHER_ENDPOINT_SCHEME: "https"
-  PUSHER_APP_ID:
-  PUSHER_APP_KEY:
-  PUSHER_FORCE_TLS: "true"
-  ECHO_ENCRYPTED: "true"
+  PUSHER_APP_ID: "kuhdo-webapp"
+  PUSHER_APP_KEY: "kuhdo-webapp"
+  PUSHER_FORCE_TLS: "false"
+  ECHO_ENCRYPTED: "false"
 
 # Secrets for the laravel app container
 secrets:
@@ -166,23 +161,33 @@ service:
   port: 80
 
 ingress:
-  enabled: false
-  annotations:
-     kubernetes.io/ingress.class: "traefik-cert-manager"
-     kubernetes.io/router.entrypoints: "websecure"
-     kubernetes.io/router.tls: "true"
+  enabled: true
+  # If certificate.enabled is set to true, annotations will automatically be set
+  annotations: {}
+    # kubernetes.io/ingress.class: "traefik-cert-manager"
+    # kubernetes.io/router.entrypoints: "websecure"
+    # kubernetes.io/router.tls: "true"
   hosts:
     web:
       name: web
-      host: dev.kuhdo.local
+      host: portal.kuhdo.de
       paths: [/]
       port: http
     websocket:
       name: websocket
-      host: ws.dev.kuhdo.local
+      host: ws.portal.kuhdo.de
       paths: [/]
       port: websocket
   tls: []
+
+# external chart for handling tls certificates
+certificate:
+  enabled: true
+  # name of tls secret
+  nameOverride: production-cert
+  hosts:
+    - portal.kuhdo.de
+  issuer: letsencrypt-production
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
