@@ -27,18 +27,19 @@ helm upgrade kuhdo-app \
     --namespace kuhdo-app \
     --create-namespace \
     --set tags.local=true \
-    --set imageCredentials.username= \
-    --set imageCredentials.password= \
-    --set secrets.webapp.EEX_SFTP_USERNAME= \
-    --set secrets.webapp.EEX_SFTP_PASSWORD= \
     --set imageTag=develop \
     --set ingress.hosts.web.host=dev.kuhdo.local \
     --set ingress.hosts.websocket.host=ws.dev.kuhdo.local \
     --set dotenv.APP_URL="http://dev.kuhdo.local" \
     --set dotenv.SESSION_DOMAIN=".dev.kuhdo.local" \
-    --set certificate.enabled="false"
+    --set certificate.enabled="false" \
+    --set imageCredentials.username= \
+    --set imageCredentials.password= \
+    --set secrets.webapp.EEX_SFTP_USERNAME= \
+    --set secrets.webapp.EEX_SFTP_PASSWORD= \
+    --set secrets.webapp.APP_KEY=
 ```
-
+**Don't forget to fill empty keys!**  
 Go to http://dev.kuhdo.local
 
 ## Scale and update
