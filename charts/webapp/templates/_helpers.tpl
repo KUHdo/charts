@@ -74,8 +74,8 @@ Create a regcred secret form values
 Return Laravel APP_KEY
 */}}
 {{- define "laravel.app_key" -}}
-{{- if not (empty .Values.secrets.APP_KEY) -}}
-    {{- .Values.secrets.APP_KEY -}}
+{{- if not (empty .Values.secrets.webapp.APP_KEY) -}}
+    {{- .Values.secrets.webapp.APP_KEY -}}
 {{- else -}}
     {{"base64:"}} {{- randAlphaNum 32 | b64enc -}}
 {{- end -}}

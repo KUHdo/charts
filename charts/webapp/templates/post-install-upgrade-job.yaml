@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "helm-webapp.fullname" . }}
+  name: {{ include "helm-webapp.fullname" . }}-post-install-upgrade
   annotations:
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-weight": "-1"
@@ -23,7 +23,7 @@ spec:
           command:
             - /bin/sh
             - -c
-            {{ if eq (include "dynamiclocal" .) "true" }}
+            {{ if eq (include "dynamiclocal" .) "false" }}
             - php artisan clear-compiled && php artisan view:clear && php artisan optimize && php artisan db:wipe --force && php artisan migrate --seed --env=local --force && php artisan kuhdo:courses:current && php artisan kuhdo:courses:eod
             {{- else }}
             - php artisan clear-compiled && php artisan view:clear && php artisan optimize && php artisan migrate --force && php artisan db:seed --force --class RolesPermissions
