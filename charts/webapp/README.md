@@ -39,7 +39,7 @@ helm upgrade kuhdo-app \
     --set secrets.webapp.EEX_SFTP_PASSWORD= \
     --set secrets.webapp.APP_KEY=
 ```
-**Don't forget to fill the empty keys!**  
+**Don't forget to fill empty keys!**  
 Go to http://dev.kuhdo.local
 
 ## Scale and update
