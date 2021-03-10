@@ -318,6 +318,9 @@ spec:
           args: [{{ $config.args | quote}}]
           {{end}}
           resources: { }
+          volumeMounts:
+            - name: {{ include "helm-webapp.fullname" $ }}-storage
+              mountPath: src/storage/app/
           securityContext:
             runAsNonRoot: true
             runAsUser: 1000
@@ -400,6 +403,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "helm-webapp.fullname" $ }}-config
+      volumes:
+          - name: {{ include "helm-webapp.fullname" . }}-storage
+            persistentVolumeClaim:
+              claimName: {{ include "helm-webapp.fullname" . }}-pv-claim
 ---
 apiVersion: apps/v1
 kind: Deployment
