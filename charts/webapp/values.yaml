@@ -281,3 +281,39 @@ redis:
       type: NodePort
       annotations: { }
       loadBalancerIP:
+
+mcsql:
+  enabled: true
+  schedule: "0 * * * *"
+
+  file:
+    # prefix: "backup"
+    ## Schema: "{Days} {Hours} {Minutes}"
+    rmOlderThan: "2 0 0"
+
+  mysql:
+    host: database
+    ## Default user is root
+    # user: root
+    password: ""
+
+  s3:
+    host: https://s3.hidrive.strato.com
+    key: ""
+    secret: ""
+    bucket: ""
+
+  persistence:
+    enabled: true
+    annotations: {}
+    accessMode: ReadWriteOnce
+    existingClaim: ""
+    ## database data Persistent Volume Storage Class
+    ## If defined, storageClassName: <storageClass>
+    ## If set to "-", storageClassName: "", which disables dynamic provisioning
+    ## If undefined (the default) or set to null, no storageClassName spec is
+    ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+    ##   GKE, AWS & OpenStack)
+    ##
+    storageClass: "nfs-client"
+    size: 2Gi
