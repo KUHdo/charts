@@ -17,23 +17,3 @@ spec:
   resources:
     requests:
       storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: {{ include "helm-webapp.fullname" . }}-mariadb-backup
-  labels:
-    {{- include "helm-webapp.labels" . | nindent 4 }}
-spec:
-  {{- if eq (include "prodstaging" .) "true" }}
-  storageClassName: nfs-client
-  {{- end }}
-  accessModes:
-  {{ if eq (include "prodstaging" .) "true" }}
-    - ReadWriteMany
-  {{- else }}
-    - ReadWriteOnce
-  {{- end }}
-  resources:
-    requests:
-      storage: 1Gi
