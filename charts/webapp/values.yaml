@@ -266,7 +266,7 @@ redis:
     ## Redis Master Service properties
     service:
       ##  Redis Master Service type
-      type: NodePort
+      type: ClusterIP
       annotations: { }
 
   ##
@@ -278,9 +278,8 @@ redis:
     ## Slave Service properties
     service:
       ## Redis Slave Service type
-      type: NodePort
+      type: ClusterIP
       annotations: { }
-      loadBalancerIP:
 
 mcsql:
   enabled: true
