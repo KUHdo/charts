@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "volume-backup.fullname" . }}
+  labels: {{- include "volume-backup.labels" . | nindent 4 }}
+data:
+  S3_HOST: {{ .Values.s3.host |  quote }}
+  S3_BUCKET: {{ .Values.s3.bucket | quote }}
+

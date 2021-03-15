@@ -1,0 +1,31 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "volume-backup.fullname" . }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: {{ include "volume-backup.name" . }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            volumeMounts:
+            - name: data
+              mountPath: /data
+            envFrom:
+            - secretRef:
+                name: {{ include "volume-backup.fullname" . }}
+            - configMapRef:
+                name: {{ include "volume-backup.fullname" . }}
+          volumes:
+          - name: data
+          {{- if .Values.persistence.enabled }}
+            persistentVolumeClaim:
+              claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "volume-backup.fullname" . }}{{- end }}
+          {{- else }}
+            emptyDir: {}
+          {{- end }}
