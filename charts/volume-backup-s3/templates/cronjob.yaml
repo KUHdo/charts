@@ -1,31 +1,29 @@
 apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
-  name: {{ include "volume-backup.fullname" . }}
+  name: {{ include "volume-backup-s3.fullname" . }}
 spec:
-  schedule: {{ .Values.schedule | quote }}
+  schedule: {{ .Values.backup.schedule | quote }}
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: Never
           containers:
-          - name: {{ include "volume-backup.name" . }}
+          - name: {{ include "volume-backup-s3.name" . }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             imagePullPolicy: {{ .Values.image.pullPolicy }}
+            command: [ "/bin/sh" ]
+            args: [ '-c', 'mc alias set s3 "$S3_HOST" "$S3_KEY" "$S3_SECRET" && tar -czvf /opt/backup.tar.gz /opt/* && mc mirror /opt/backup.tar.gz s3/"$S3_BUCKET"' ]
             volumeMounts:
             - name: data
-              mountPath: /data
+              mountPath: /opt
             envFrom:
             - secretRef:
-                name: {{ include "volume-backup.fullname" . }}
+                name: {{ include "volume-backup-s3.fullname" . }}
             - configMapRef:
-                name: {{ include "volume-backup.fullname" . }}
+                name: {{ include "volume-backup-s3.fullname" . }}
           volumes:
-          - name: data
-          {{- if .Values.persistence.enabled }}
-            persistentVolumeClaim:
-              claimName: {{ if .Values.persistence.existingClaim }}{{ .Values.persistence.existingClaim }}{{- else }}{{ include "volume-backup.fullname" . }}{{- end }}
-          {{- else }}
-            emptyDir: {}
-          {{- end }}
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ if .Values.volume.claimName }}{{ .Values.volume.claimName }}{{- else }}{{ include "volume-backup-s3.fullname" . }}{{- end }}

@@ -57,6 +57,10 @@ dependencies:
     version: ^0.1.1
     repository: https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads
     condition: mcsql.enabled
+  - name: volume-backup-s3
+    version: ^0.1.1
+    repository: https://api.bitbucket.org/2.0/repositories/kuhdo/charts/downloads
+    condition: volume-backup-s3.enabled
 maintainers:
   - name: KUHdo GmbH
     email: dev@kuhdo.de
