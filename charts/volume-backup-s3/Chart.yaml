@@ -1,6 +1,6 @@
 apiVersion: v2
 name: volume-backup-s3
-description: A Helm chart for volume (persistens claims) backup to s3
+description: A Helm chart for volume (persistence claims) backup to s3
 
 # A chart can be either an 'application' or a 'library' chart.
 #
