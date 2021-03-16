@@ -4,6 +4,9 @@ metadata:
   name: {{ include "volume-backup-s3.fullname" . }}
   labels: {{- include "volume-backup-s3.labels" . | nindent 4 }}
 data:
+  {{- if .Values.backup.rmOlderThan }}
+  RM_OLDER_THAN: {{ .Values.backup.rmOlderThan | quote }}
+  {{- end }}
   S3_HOST: {{ .Values.s3.host |  quote }}
   S3_BUCKET: {{ .Values.s3.bucket | quote }}
 

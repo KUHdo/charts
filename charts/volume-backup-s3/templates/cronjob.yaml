@@ -13,11 +13,9 @@ spec:
           - name: {{ include "volume-backup-s3.name" . }}
             image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
             imagePullPolicy: {{ .Values.image.pullPolicy }}
-            command: [ "/bin/sh" ]
-            args: [ '-c', 'mc alias set s3 "$S3_HOST" "$S3_KEY" "$S3_SECRET" && tar -czvf /opt/backup.tar.gz /opt/* && mc mirror /opt/backup.tar.gz s3/"$S3_BUCKET"' ]
             volumeMounts:
             - name: data
-              mountPath: /opt
+              mountPath: /opt/volume
             envFrom:
             - secretRef:
                 name: {{ include "volume-backup-s3.fullname" . }}
