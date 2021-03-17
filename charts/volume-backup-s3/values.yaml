@@ -1,0 +1,25 @@
+# Default values for kuhdo/volume-backup-s3.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+image:
+  repository: kuhdo/volume-backup-s3
+  pullPolicy: IfNotPresent
+  tag: 0.1.2
+
+nameOverride: ""
+fullnameOverride: ""
+
+backup:
+  schedule: "0 0 * * *"
+  rmOlderThan: "7 0 0"
+
+volume:
+  claimName: ""
+
+s3:
+  host: ""
+  bucket: ""
+  secrets:
+    accessKeyId: ""
+    secretAccessKey: ""

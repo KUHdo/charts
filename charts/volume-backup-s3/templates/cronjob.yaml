@@ -1,0 +1,27 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ include "volume-backup-s3.fullname" . }}
+spec:
+  schedule: {{ .Values.backup.schedule | quote }}
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: {{ include "volume-backup-s3.name" . }}
+            image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullPolicy: {{ .Values.image.pullPolicy }}
+            volumeMounts:
+            - name: data
+              mountPath: /opt/volume
+            envFrom:
+            - secretRef:
+                name: {{ include "volume-backup-s3.fullname" . }}
+            - configMapRef:
+                name: {{ include "volume-backup-s3.fullname" . }}
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ if .Values.volume.claimName }}{{ .Values.volume.claimName }}{{- else }}{{ include "volume-backup-s3.fullname" . }}{{- end }}

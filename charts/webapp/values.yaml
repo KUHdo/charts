@@ -316,3 +316,20 @@ mcsql:
     ##
     storageClass: "nfs-client"
     size: 2Gi
+
+volume-backup-s3:
+  enabled: true
+
+  backup:
+    schedule: "0 0 * * *"
+    rmOlderThan: "7 0 0"
+
+  s3:
+    host: https://s3.hidrive.strato.com
+    bucket: ""
+    secrets:
+      accessKeyId: ""
+      secretAccessKey: ""
+
+  volume:
+    # claimName: ""

@@ -155,7 +155,7 @@ spec:
       volumes:
         - name: {{ include "helm-webapp.fullname" . }}-storage
           persistentVolumeClaim:
-            claimName: {{ include "helm-webapp.fullname" . }}-pv-claim
+            claimName: {{ include "helm-webapp.fullname" . }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -406,7 +406,7 @@ spec:
       volumes:
           - name: {{ include "helm-webapp.fullname" . }}-storage
             persistentVolumeClaim:
-              claimName: {{ include "helm-webapp.fullname" . }}-pv-claim
+              claimName: {{ include "helm-webapp.fullname" . }}
 ---
 apiVersion: apps/v1
 kind: Deployment

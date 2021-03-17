@@ -2,6 +2,9 @@
 
 All notable changes to `webapp` will be documented in this file
 
+## 0.1.6 - 2021-03-16
+- Added volume backup s3 chart for storage backups
+
 ## 0.1.5 - 2021-03-11
 - Added mcsql chart for database backups
 
