@@ -13,6 +13,7 @@ metadata:
     kubernetes.io/router.entrypoints: "websecure"
     kubernetes.io/router.tls: "true"
     traefik.ingress.kubernetes.io/router.middlewares: "kube-system-sts-header@kubernetescrd"
+    traefik.ingress.kubernetes.io/router.tls.options: default
     {{- end }}
     {{- range $key, $value := .Values.ingress.annotations }}
       {{ $key }}: {{ $value | quote }}
