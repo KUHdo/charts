@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ include "helm-webapp.fullname" . }}}-pv-claim
+  name: {{ include "helm-webapp.fullname" . }}}
   labels:
   {{- include "helm-webapp.labels" . | nindent 4 }}
 spec:
