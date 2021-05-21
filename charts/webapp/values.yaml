@@ -22,6 +22,9 @@ fullnameOverride: "kuhdo-webapp"
 # default value is appVersion
 imageTag:
 
+nfsClientStorage:
+  enabled: true
+
 # pod container configuration
 containers:
   # name of the container
