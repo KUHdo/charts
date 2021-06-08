@@ -179,6 +179,7 @@ spec:
         {{- end }}
       labels:
         {{- include "helm-webapp.selectorLabels" . | nindent 8 }}
+        date: "{{ now | unixEpoch }}"
     spec:
       imagePullSecrets:
         - name: regcred
