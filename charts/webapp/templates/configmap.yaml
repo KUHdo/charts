@@ -44,3 +44,8 @@ data:
   ECHO_ENCRYPTED: {{ .Values.dotenv.ECHO_ENCRYPTED | default "true" | quote }}
   PUSHER_HOST: {{ (include "helm-webapp.fullname" .) }}-websocket
   PUSHER_APP_CLUSTER: {{ .Values.dotenv.PUSHER_APP_CLUSTER | default "" | quote }}
+  TWILIO_ENABLED: {{ .Values.dotenv.TWILIO_ENABLED | quote }}
+  TWILIO_ACCOUNT_SID: {{ .Values.dotenv.TWILIO_ACCOUNT_SID | quote }}
+  TWILIO_AUTH_TOKEN: {{ .Values.dotenv.TWILIO_AUTH_TOKEN | quote }}
+  TWILIO_PHONE_VERIFICATION_SID: {{ .Values.dotenv.TWILIO_PHONE_VERIFICATION_SID | quote }}
+  TWILIO_TRANSACTION_VERIFICATION_SID: {{ .Values.dotenv.TWILIO_TRANSACTION_VERIFICATION_SID | quote }}
