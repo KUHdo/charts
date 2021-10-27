@@ -48,4 +48,9 @@ data:
   TWILIO_ACCOUNT_SID: {{ .Values.dotenv.TWILIO_ACCOUNT_SID | quote }}
   TWILIO_AUTH_TOKEN: {{ .Values.dotenv.TWILIO_AUTH_TOKEN | quote }}
   TWILIO_PHONE_VERIFICATION_SID: {{ .Values.dotenv.TWILIO_PHONE_VERIFICATION_SID | quote }}
-  TWILIO_TRANSACTION_VERIFICATION_SID: {{ .Values.dotenv.TWILIO_TRANSACTION_VERIFICATION_SID | quote }}
+  REGIS_TR_RECEIVER: {{ .Values.dotenv.REGIS_TR_RECEIVER | quote }}
+  REGIS_TR_ENVIRONMENT: {{ .Values.dotenv.REGIS_TR_ENVIRONMENT | quote }}
+  REGIS_TR_HOST: {{ .Values.dotenv.REGIS_TR_HOST | quote }}
+  REGIS_TR_WSDL_URL: {{ .Values.dotenv.REGIS_TR_WSDL_URL | quote }}
+  REGIS_TR_USERNAME: {{ .Values.dotenv.REGIS_TR_USERNAME | quote }}
+  REGIS_TR_PASSWORD: {{ .Values.dotenv.REGIS_TR_PASSWORD | quote }}
