@@ -55,3 +55,12 @@ data:
   REGIS_TR_WSDL_URL: {{ .Values.dotenv.REGIS_TR_WSDL_URL | quote }}
   REGIS_TR_USERNAME: {{ .Values.dotenv.REGIS_TR_USERNAME | quote }}
   REGIS_TR_PASSWORD: {{ .Values.dotenv.REGIS_TR_PASSWORD | quote }}
+  # Filesystem Driver
+  FILESYSTEM_DRIVER: {{ .Values.dotenv.FILESYSTEM_DRIVER | quote }}
+  FILESYSTEM_PUBLIC_DRIVER: {{ .Values.dotenv.FILESYSTEM_PUBLIC_DRIVER | quote }}
+  AWS_ACCESS_KEY_ID: {{ .Values.dotenv.AWS_ACCESS_KEY_ID | quote }}
+  AWS_DEFAULT_REGION: {{ .Values.dotenv.AWS_DEFAULT_REGION | quote }}
+  AWS_URL: {{ .Values.dotenv.AWS_URL | quote }}
+  AWS_BUCKET: {{ .Values.dotenv.AWS_BUCKET | quote }}
+  AWS_ENDPOINT: {{ .Values.dotenv.AWS_ENDPOINT | quote }}
+  AWS_USE_PATH_STYLE_ENDPOINT: true {{ .Values.dotenv.AWS_USE_PATH_STYLE_ENDPOINT | quote }}

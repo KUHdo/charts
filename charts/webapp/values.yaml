@@ -95,6 +95,14 @@ dotenv:
   PUSHER_APP_KEY: "kuhdo-webapp"
   PUSHER_FORCE_TLS: "false"
   ECHO_ENCRYPTED: "false"
+  FILESYSTEM_PUBLIC_DRIVER: "local"
+  FILESYSTEM_DRIVER: "local"
+  AWS_ACCESS_KEY_ID: "replaced"
+  AWS_DEFAULT_REGION: "eu-central-1"
+  AWS_URL: "https://s3.hidrive.strato.com"
+  AWS_BUCKET: "storage-production"
+  AWS_ENDPOINT: "https://s3.hidrive.strato.com"
+  AWS_USE_PATH_STYLE_ENDPOINT: true
 
 # Secrets for the laravel app container
 secrets:
@@ -111,6 +119,7 @@ secrets:
     MAIL_PASSWORD: test123
     SLACK_WEBHOOK_URL: supersecret
     PUSHER_APP_SECRET: pushersecret
+    AWS_SECRET_ACCESS_KEY: aws-secret-access-key
   database:
     MYSQL_DATABASE: homestead
     MYSQL_USER: homestead
