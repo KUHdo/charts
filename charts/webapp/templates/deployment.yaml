@@ -414,7 +414,7 @@ spec:
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: AWS_SECRET_ACCESS_KEY
             {{ if eq (include "prodstaging" $) "true" }}
             - name: REDIS_PASSWORD
@@ -544,7 +544,7 @@ spec:
             - name: AWS_SECRET_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: { { include "helm-webapp.fullname" $ } }-env-secrets
+                  name: {{ include "helm-webapp.fullname" $ }}-env-secrets
                   key: AWS_SECRET_ACCESS_KEY
             {{ if eq (include "prodstaging" $) "true" }}
             - name: REDIS_PASSWORD
