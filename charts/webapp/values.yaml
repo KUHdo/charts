@@ -64,12 +64,12 @@ dotenv:
   APP_LOG_LEVEL: "debug"
   APP_LOG_CHANNEL: "errorlog"
   APP_NAME: "KUHdo GmbH"
-  APP_URL: "http://portal.kuhdo.de"
+  APP_URL: "http://app.kuhdo.de"
   BROADCAST_DRIVER: "redis"
   CACHE_DRIVER: "redis"
   QUEUE_DRIVER: "redis"
   SESSION_DRIVER: "redis"
-  SESSION_DOMAIN: ".portal.kuhdo.de"
+  SESSION_DOMAIN: ".app.kuhdo.de"
   SESSION_CONNECTION: "redis"
   DB_CONNECTION: "mariadb"
   DB_HOST: "database-svc"
@@ -182,12 +182,12 @@ ingress:
   hosts:
     web:
       name: web
-      host: portal.kuhdo.de
+      host: app.kuhdo.de
       paths: [/]
       port: http
     websocket:
       name: websocket
-      host: ws.portal.kuhdo.de
+      host: ws.app.kuhdo.de
       paths: [/]
       port: websocket
   tls: []
@@ -198,7 +198,7 @@ certificate:
   # name of tls secret
   nameOverride: production-cert
   hosts:
-    - portal.kuhdo.de
+    - app.kuhdo.de
   issuer: letsencrypt-production
 
 resources: {}
